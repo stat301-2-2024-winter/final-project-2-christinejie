@@ -1,0 +1,103 @@
+---
+title: "Progress Memo 2"
+subtitle: |
+  | Final Project 
+  | Data Science 2 with R (STAT 301-2)
+author: "Christine Jie"
+date: today
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+    
+execute:
+  echo: true
+  warning: false
+
+from: markdown+emoji 
+reference-location: margin
+citation-location: margin
+---
+
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+
+[https://github.com/stat301-2-2024-winter/final-project-2-christinejie](https://github.com/stat301-2-2024-winter/final-project-2-christinejie)
+
+:::
+
+::: {.callout-warning}
+GitHub (free account) cannot store large files. If you try to commit and push a large dataset you will have an ERROR! Any file over 100 MB (100,000 KB) needs to be added to the `.gitignore` file BEFORE committing.
+
+**We may need to do that for files in your final project!**
+:::
+
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+house <- read_csv("data/austinHousingData.csv") |>
+  janitor::clean_names() |>
+  mutate(
+    has_association = factor(has_association),
+    has_cooling = factor(has_cooling),
+    has_garage = factor(has_garage),
+    has_heating = factor(has_heating),
+    has_spa = factor(has_spa),
+    has_view = factor(has_view),
+    home_type = factor(home_type),
+    city = factor(city),
+    zipcode = factor(zipcode)
+  ) |>
+  select(-c(description, home_image))
+```
+
+
+## Prediction Problem 
+I want to predict home sale prices in Austin, TX using variables including number of bedrooms, square feet, and neighborhood/zipcode. 
+
+
+## Data source
+
+[Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices)
+My data source is Kaggle. 
+
+
+## Data quality & complexity check
+
+```{r}
+ncol(house)
+nrow(house)
+```
+There are 45 variables and 15,171 observations 
+
+There are 12 categorical and 33 numerical variables. 
+```{r}
+is.na(house) |>  
+  head(n=5)
+```
+
+There are no missingness issues. 
+
+## Target Variable Analysis 
+
+```{r}
+house |> 
+  ggplot(aes(x=latest_price)) + 
+  geom_histogram(bins=500) +
+  coord_cartesian(xlim=c(0,700000))
+```
+
+```{r}
+house |> 
+  ggplot(aes(x=latest_price, y= living_area_sq_ft)) + 
+  geom_jitter() +
+  coord_cartesian(xlim=c(0,700000), ylim=c(0,5000)) + 
+  geom_smooth()
+```
+
+
