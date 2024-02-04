@@ -30,12 +30,6 @@ citation-location: margin
 
 :::
 
-::: {.callout-warning}
-GitHub (free account) cannot store large files. If you try to commit and push a large dataset you will have an ERROR! Any file over 100 MB (100,000 KB) needs to be added to the `.gitignore` file BEFORE committing.
-
-**We may need to do that for files in your final project!**
-:::
-
 
 ```{r}
 library(tidyverse)
@@ -78,7 +72,7 @@ There are 45 variables and 15,171 observations
 There are 12 categorical and 33 numerical variables. 
 ```{r}
 is.na(house) |>  
-  head(n=5)
+  head(n=3)
 ```
 
 There are no missingness issues. 
@@ -92,6 +86,9 @@ house |>
   coord_cartesian(xlim=c(0,700000))
 ```
 
+The latest_price variable is approximately normally distributed when disregarding outliers. Above, I limited x values to 700,000, but I need to think about what to do about outliers in my analysis. 
+
+
 ```{r}
 house |> 
   ggplot(aes(x=latest_price, y= living_area_sq_ft)) + 
@@ -99,5 +96,5 @@ house |>
   coord_cartesian(xlim=c(0,700000), ylim=c(0,5000)) + 
   geom_smooth()
 ```
-
+Price and square feet are generally positively correlated. As square footage increases, so does price. However, this positive relationship is weakened when outliers are considered. Again, this is something I need to consider going forward.  
 
