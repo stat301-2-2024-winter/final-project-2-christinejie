@@ -1,0 +1,66 @@
+---
+title: "Progress Memo 2"
+subtitle: |
+  | Final Project 
+  | Data Science 2 with R (STAT 301-2)
+author: "Christine Jie"
+date: today
+
+format:
+  html:
+    toc: true
+    embed-resources: true
+    
+execute:
+  echo: false
+  warning: false
+
+from: markdown+emoji 
+reference-location: margin
+citation-location: margin
+---
+
+
+
+::: {.callout-tip icon=false}
+
+## Github Repo Link
+
+[https://github.com/stat301-2-2024-winter/final-project-2-christinejie](https://github.com/stat301-2-2024-winter/final-project-2-christinejie)
+
+:::
+
+an analysis plan: data splitting, resampling (cross-validation, bootstrap, etc), which model types, how many recipes, etc. Note that students should have this mapped out in their GitHub repo. That is, there should be place holder R scripts created. You don't have to have everything coded, but the overall structure should be evident.   
+Two model types should be defined and fitted to the resamples: null/baseline model and one other model type (likely standard linear or logistic model):
+The recipe can be very basic since we just want to see if you can get things running
+Students should summarize their progress, where they are at, and what their next steps will be. Identifying and potential issues or concerns would be a good idea too.
+
+
+
+
+
+
+## Data source
+
+Blah blah blah^[an example of footnote --- [content in margins](https://quarto.org/docs/blog/posts/2022-02-17-advanced-layout/)]
+
+
+
+
+
+
+## Why this data
+
+Blah blah blah^[another footnote]
+
+## Data quality & complexity check
+
+Blah blah blah
+
+## Potential data issues
+
+Blah blah blah
+
+## Misc
+
+Blah Blah
