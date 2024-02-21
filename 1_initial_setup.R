@@ -26,7 +26,16 @@ house <- read_csv("data/austinHousingData.csv") |>
     zipcode = factor(zipcode),
     price_log10 = log10(latest_price)
   ) |>
-  select(-c(description, home_image, latest_saledate))
+  select(
+    -c(
+      description,
+      home_image,
+      latest_saledate,
+      street_address,
+      latest_price_source,
+      zpid
+    )
+  )
 
 save(house,
      file = "results/house.rda")
@@ -46,9 +55,9 @@ save(house_train, house_test, file = "results/house_split.rda")
 
 ## folds
 house_folds <- vfold_cv(house_train,
-                          v = 10,
-                          repeats = 5,
-                          strata = price_log10)
+                        v = 10,
+                        repeats = 5,
+                        strata = price_log10)
 
 save(house_folds,
      file = "results/house_folds.rda")
@@ -58,3 +67,20 @@ save(house_folds,
 house |> 
   ggplot(aes(x=price_log10)) + 
   geom_histogram(bins=100) 
+
+house |> 
+  ggplot(aes(x=median_students_per_teacher,y=avg_school_rating)) +
+  geom_jitter()
+
+
+house |> 
+  ggplot(aes(x=num_of_bathrooms,y=num_of_bedrooms)) +
+  geom_jitter()
+
+corr<-house |> 
+  select(where(is.numeric)) |> 
+  cor()
+
+ggcorrplot::ggcorrplot(corr)
+
+

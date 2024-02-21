@@ -19,9 +19,6 @@ from: markdown+emoji
 reference-location: margin
 citation-location: margin
 ---
-
-
-
 ::: {.callout-tip icon=false}
 
 ## Github Repo Link
@@ -29,38 +26,41 @@ citation-location: margin
 [https://github.com/stat301-2-2024-winter/final-project-2-christinejie](https://github.com/stat301-2-2024-winter/final-project-2-christinejie)
 
 :::
+**Analysis Plan**
 
-an analysis plan: data splitting, resampling (cross-validation, bootstrap, etc), which model types, how many recipes, etc. Note that students should have this mapped out in their GitHub repo. That is, there should be place holder R scripts created. You don't have to have everything coded, but the overall structure should be evident.   
-Two model types should be defined and fitted to the resamples: null/baseline model and one other model type (likely standard linear or logistic model):
-The recipe can be very basic since we just want to see if you can get things running
-Students should summarize their progress, where they are at, and what their next steps will be. Identifying and potential issues or concerns would be a good idea too.
+Data Splitting: used prop = 0.75, strata = price_log10, breaks = 4, see `1_initial_setup.R`
+
+Resampling: used vfold_cv with 10 folds and 5 repeats, see `1_initial_setup.R`
+
+Model Types: planning on using baseline, null, lasso, ridge, logistic, random forest, boosted tree, see `3_baseline.R` and `3_OLS.R`
+
+Recipes: planning on creating 2 recipes: one standard and one tree based recipe, 
+see `2_recipes.R`
+
+**Progress Summary**
+
+1) Determined that variable of interest "latest_price" should be transformed using a base 10 log transformation. New outcome variable of interest is "pricelog_10". See `1_initial_setup.R`. 
+
+2) Split and folded "house" dataset. See `1_initial_setup.R`. 
+
+3) Created 2 recipes, one standard and one for tree based models. Used several interaction terms for standard recipe. For both recipes, handled zero variance, dummy variables, and normalized/centered/scaled. See `2_recipes.R`. 
+
+4) Defined and fit baseline/null and simple linear models using the standard recipe. Calculated RMSE for each model. See `3_baseline.R` and `3_OLS.R`. 
+
+**Next Steps**
+
+1) Continue developing recipe, especially pay attention to interaction terms 
+
+2) Define and fit additional models as specified above 
+
+3) Calculate RMSE, MAE, RSQ for each model 
+
+4) Determine best model using metrics. 
+
+**Issues/Concerns**
+
+1) Unsure of how to determine which variables need `step_interact()`
+
+2) I have very large data set and it takes a long time to run most things, I am using parallel processing but it's still taking a long time 
 
 
-
-
-
-
-## Data source
-
-Blah blah blah^[an example of footnote --- [content in margins](https://quarto.org/docs/blog/posts/2022-02-17-advanced-layout/)]
-
-
-
-
-
-
-## Why this data
-
-Blah blah blah^[another footnote]
-
-## Data quality & complexity check
-
-Blah blah blah
-
-## Potential data issues
-
-Blah blah blah
-
-## Misc
-
-Blah Blah

@@ -2532,19 +2532,9 @@ vertical-align: -.125em;
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#data-source" id="toc-data-source" class="nav-link active" data-scroll-target="#data-source">Data source</a></li>
-  <li><a href="#why-this-data" id="toc-why-this-data" class="nav-link" data-scroll-target="#why-this-data">Why this data</a></li>
-  <li><a href="#data-quality-complexity-check" id="toc-data-quality-complexity-check" class="nav-link" data-scroll-target="#data-quality-complexity-check">Data quality &amp; complexity check</a></li>
-  <li><a href="#potential-data-issues" id="toc-potential-data-issues" class="nav-link" data-scroll-target="#potential-data-issues">Potential data issues</a></li>
-  <li><a href="#misc" id="toc-misc" class="nav-link" data-scroll-target="#misc">Misc</a></li>
-  </ul>
-</nav>
+  
 </div>
-<main class="content page-columns page-full" id="quarto-document-content">
+<main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -2576,20 +2566,6 @@ Data Science 2 with R (STAT 301-2)</p><p></p>
 
 </header>
 
-<div class="callout-important callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Memo format
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Like all other submissions for this course, we expect the memo to be neat and well organized. This a template to get you started.</p>
-<p>You should make this document your own. To help with this we have added a date to the yaml above (good whenever writing memos). You should remove this block when making this document your own.</p>
-</div>
-</div>
 <div class="callout-tip callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2600,45 +2576,33 @@ Github Repo Link
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>To link to your github <strong>repo</strong>sitory, appropriately edit the example link below. Meaning replace <code>https://your-github-repo-url</code> with your github repo url. Suggest verifying the link works before submitting.</p>
 <p><a href="https://github.com/stat301-2-2024-winter/final-project-2-christinejie">https://github.com/stat301-2-2024-winter/final-project-2-christinejie</a></p>
 </div>
 </div>
-<div class="callout-warning callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Warning
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>GitHub (free account) cannot store large files. If you try to commit and push a large dataset you will have an ERROR! Any file over 100 MB (100,000 KB) needs to be added to the <code>.gitignore</code> file BEFORE committing.</p>
-<p><strong>We may need to do that for files in your final project!</strong></p>
-</div>
-</div>
-<section id="data-source" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="data-source">Data source</h2>
-<div class="page-columns page-full"><p>Blah blah blah<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn1"><p><sup>1</sup> an example of footnote — <a href="https://quarto.org/docs/blog/posts/2022-02-17-advanced-layout/">content in margins</a></p></li></div></div>
-</section>
-<section id="why-this-data" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="why-this-data">Why this data</h2>
-<div class="page-columns page-full"><p>Blah blah blah<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p><div class="no-row-height column-margin column-container"><li id="fn2"><p><sup>2</sup> another footnote</p></li></div></div>
-</section>
-<section id="data-quality-complexity-check" class="level2">
-<h2 class="anchored" data-anchor-id="data-quality-complexity-check">Data quality &amp; complexity check</h2>
-<p>Blah blah blah</p>
-</section>
-<section id="potential-data-issues" class="level2">
-<h2 class="anchored" data-anchor-id="potential-data-issues">Potential data issues</h2>
-<p>Blah blah blah</p>
-</section>
-<section id="misc" class="level2">
-<h2 class="anchored" data-anchor-id="misc">Misc</h2>
-<p>Blah Blah</p>
-</section>
-
+<p><strong>Analysis Plan</strong></p>
+<p>Data Splitting: used prop = 0.75, strata = price_log10, breaks = 4, see <code>1_initial_setup.R</code></p>
+<p>Resampling: used vfold_cv with 10 folds and 5 repeats, see <code>1_initial_setup.R</code></p>
+<p>Model Types: planning on using baseline, null, lasso, ridge, logistic, random forest, boosted tree, see <code>3_baseline.R</code> and <code>3_OLS.R</code></p>
+<p>Recipes: planning on creating 2 recipes: one standard and one tree based recipe, see <code>2_recipes.R</code></p>
+<p><strong>Progress Summary</strong></p>
+<ol type="1">
+<li><p>Determined that variable of interest “latest_price” should be transformed using a base 10 log transformation. New outcome variable of interest is “pricelog_10”. See <code>1_initial_setup.R</code>.</p></li>
+<li><p>Split and folded “house” dataset. See <code>1_initial_setup.R</code>.</p></li>
+<li><p>Created 2 recipes, one standard and one for tree based models. Used several interaction terms for standard recipe. For both recipes, handled zero variance, dummy variables, and normalized/centered/scaled. See <code>2_recipes.R</code>.</p></li>
+<li><p>Defined and fit baseline/null and simple linear models using the standard recipe. Calculated RMSE for each model. See <code>3_baseline.R</code> and <code>3_OLS.R</code>.</p></li>
+</ol>
+<p><strong>Next Steps</strong></p>
+<ol type="1">
+<li><p>Continue developing recipe, especially pay attention to interaction terms</p></li>
+<li><p>Define and fit additional models as specified above</p></li>
+<li><p>Calculate RMSE, MAE, RSQ for each model</p></li>
+<li><p>Determine best model using metrics.</p></li>
+</ol>
+<p><strong>Issues/Concerns</strong></p>
+<ol type="1">
+<li><p>Unsure of how to determine which variables need <code>step_interact()</code></p></li>
+<li><p>I have very large data set and it takes a long time to run most things, I am using parallel processing but it’s still taking a long time</p></li>
+</ol>
 
 </main>
 <!-- /main column -->
