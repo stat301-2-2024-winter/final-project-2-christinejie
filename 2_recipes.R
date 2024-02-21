@@ -21,12 +21,13 @@ registerDoMC(cores=num_cores)
 #recipe
 house_recipe <- recipe(price_log10 ~ ., data = house_train) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |> 
-  step_normalize(all_predictors()) |>
-  step_zv(all_predictors()) 
+  step_zv(all_predictors()) |> 
+  step_normalize(all_predictors()) 
   
 save(house_recipe,
      file="results/house_recipe.rda")
 
 prep(house_recipe) |> 
-  bake(new_data = NULL) |> 
+  bake(new_data = house_train) |> 
   view()
+
