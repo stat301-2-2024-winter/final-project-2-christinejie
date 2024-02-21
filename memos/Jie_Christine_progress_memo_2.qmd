@@ -26,6 +26,12 @@ citation-location: margin
 [https://github.com/stat301-2-2024-winter/final-project-2-christinejie](https://github.com/stat301-2-2024-winter/final-project-2-christinejie)
 
 :::
+
+**Analysis Plan**
+
+[Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices)
+From Kaggle. 
+
 **Analysis Plan**
 
 Data Splitting: used prop = 0.75, strata = price_log10, breaks = 4, see `1_initial_setup.R`
