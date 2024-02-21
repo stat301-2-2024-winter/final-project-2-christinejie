@@ -27,7 +27,7 @@ citation-location: margin
 
 :::
 
-**Analysis Plan**
+**Data Source**
 
 [Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices)
 From Kaggle. 
