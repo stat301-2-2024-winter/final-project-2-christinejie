@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Christine Jie">
-<meta name="dcterms.date" content="2024-02-21">
+<meta name="dcterms.date" content="2024-02-22">
 
 <title>Progress Memo 2</title>
 <style>
@@ -2557,7 +2557,7 @@ Data Science 2 with R (STAT 301-2)</p><p></p>
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 21, 2024</p>
+      <p class="date">February 22, 2024</p>
     </div>
   </div>
     
@@ -2566,6 +2566,9 @@ Data Science 2 with R (STAT 301-2)</p><p></p>
 
 </header>
 
+<div class="cell">
+
+</div>
 <div class="callout-tip callout callout-style-default no-icon callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -2579,8 +2582,9 @@ Github Repo Link
 <p><a href="https://github.com/stat301-2-2024-winter/final-project-2-christinejie">https://github.com/stat301-2-2024-winter/final-project-2-christinejie</a></p>
 </div>
 </div>
-<p><strong>Data Source</strong></p>
-<p><a href="https://www.kaggle.com/datasets/ericpierce/austinhousingprices">Austin, TX House Listings</a> From Kaggle.</p>
+<p><strong>Data Source</strong>: <a href="https://www.kaggle.com/datasets/ericpierce/austinhousingprices">Austin, TX House Listings</a> From Kaggle.</p>
+<p><strong>Project Overview</strong>: I want to predict house sale prices in Austin using variables such as number of bathrooms, number of bedrooms, and square feet of living space. This is a regression problem.</p>
+<p><strong>Assessment Metric</strong>: I will use RMSE to evaluate each model.</p>
 <p><strong>Analysis Plan</strong></p>
 <p>Data Splitting: used prop = 0.75, strata = price_log10, breaks = 4, see <code>1_initial_setup.R</code></p>
 <p>Resampling: used vfold_cv with 10 folds and 5 repeats, see <code>1_initial_setup.R</code></p>
@@ -2593,11 +2597,42 @@ Github Repo Link
 <li><p>Created 2 recipes, one standard and one for tree based models. Used several interaction terms for standard recipe. For both recipes, handled zero variance, dummy variables, and normalized/centered/scaled. See <code>2_recipes.R</code>.</p></li>
 <li><p>Defined and fit baseline/null and simple linear models using the standard recipe. Calculated RMSE for each model. See <code>3_baseline.R</code> and <code>3_OLS.R</code>.</p></li>
 </ol>
+<p><strong>RMSE Table for Baseline and Linear Models</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Model Type </th>
+   <th style="text-align:right;"> RMSE </th>
+   <th style="text-align:right;"> Standard Error </th>
+   <th style="text-align:right;"> Number Computations </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> Linear </td>
+   <td style="text-align:right;"> 0.16 </td>
+   <td style="text-align:right;"> 0.0071 </td>
+   <td style="text-align:right;"> 50 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Baseline </td>
+   <td style="text-align:right;"> 0.24 </td>
+   <td style="text-align:right;"> 0.0013 </td>
+   <td style="text-align:right;"> 50 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
 <p><strong>Next Steps</strong></p>
 <ol type="1">
 <li><p>Continue developing recipe, especially pay attention to interaction terms</p></li>
 <li><p>Define and fit additional models as specified above</p></li>
-<li><p>Calculate RMSE, MAE, RSQ for each model</p></li>
+<li><p>Calculate RMSE for each model.</p></li>
 <li><p>Determine best model using metrics.</p></li>
 </ol>
 <p><strong>Issues/Concerns</strong></p>

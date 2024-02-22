@@ -19,6 +19,35 @@ from: markdown+emoji
 reference-location: margin
 citation-location: margin
 ---
+```{r}
+#| echo: false
+
+load(here::here("results/house.rda"))
+load(here::here("results/house_split.rda"))
+load(here::here("results/house_folds.rda"))
+load(here::here("results/house_recipe.rda"))
+load(here::here("results/null.rda"))
+load(here::here("results/lm.rda"))
+load(here::here("results/rmse_table.rda"))
+library(tidyverse)
+library(rsample)
+library(parsnip)
+library(tidymodels)
+library(glmnet)
+library(ranger)
+library(kknn)
+library(kableExtra)
+set.seed(123)
+library(here)
+tidymodels_prefer()
+library(doMC)
+num_cores <- parallel::detectCores(logical=TRUE)
+registerDoMC(cores=num_cores)
+```
+
+
+
+
 ::: {.callout-tip icon=false}
 
 ## Github Repo Link
@@ -27,10 +56,12 @@ citation-location: margin
 
 :::
 
-**Data Source**
-
-[Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices)
+**Data Source**: [Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices)
 From Kaggle. 
+
+**Project Overview**: I want to predict house sale prices in Austin using variables such as number of bathrooms, number of bedrooms, and square feet of living space. This is a regression problem. 
+
+**Assessment Metric**: I will use RMSE to evaluate each model. 
 
 **Analysis Plan**
 
@@ -53,13 +84,20 @@ see `2_recipes.R`
 
 4) Defined and fit baseline/null and simple linear models using the standard recipe. Calculated RMSE for each model. See `3_baseline.R` and `3_OLS.R`. 
 
+**RMSE Table for Baseline and Linear Models**
+```{r}
+#| echo: false
+rmse_table
+```
+
+
 **Next Steps**
 
 1) Continue developing recipe, especially pay attention to interaction terms 
 
 2) Define and fit additional models as specified above 
 
-3) Calculate RMSE, MAE, RSQ for each model 
+3) Calculate RMSE for each model. 
 
 4) Determine best model using metrics. 
 
