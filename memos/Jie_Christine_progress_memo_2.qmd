@@ -65,14 +65,13 @@ From Kaggle.
 
 **Analysis Plan**
 
-Data Splitting: used prop = 0.75, strata = price_log10, breaks = 4, see `1_initial_setup.R`
+Data Splitting: used prop = 0.75, strata = price_log10, breaks = 4. See `1_initial_setup.R`
 
-Resampling: used vfold_cv with 10 folds and 5 repeats, see `1_initial_setup.R`
+Resampling: used vfold_cv with 10 folds and 5 repeats. See `1_initial_setup.R`
 
-Model Types: planning on using baseline, null, lasso, ridge, logistic, random forest, boosted tree, see `3_baseline.R` and `3_OLS.R`
+Model Types: planning on using baseline, null, lasso, ridge, logistic, random forest, boosted tree. See `3_baseline.R` and `3_OLS.R`
 
-Recipes: planning on creating 2 recipes: one standard and one tree based recipe, 
-see `2_recipes.R`
+Recipes: planning on creating 2 recipes: one standard and one tree based recipe. See `2_recipes.R`
 
 **Progress Summary**
 
@@ -83,6 +82,8 @@ see `2_recipes.R`
 3) Created 2 recipes, one standard and one for tree based models. Used several interaction terms for standard recipe. For both recipes, handled zero variance, dummy variables, and normalized/centered/scaled. See `2_recipes.R`. 
 
 4) Defined and fit baseline/null and simple linear models using the standard recipe. Calculated RMSE for each model. See `3_baseline.R` and `3_OLS.R`. 
+
+5) Created a table showing RMSE for each model. See `4_model_results.R`. 
 
 **RMSE Table for Baseline and Linear Models**
 ```{r}

@@ -32,6 +32,18 @@ rmse_table <- house_metrics |>
   select("Model Type", RMSE, "Standard Error", "Number Computations") %>%
   knitr::kable(digits = c(NA, 2, 4, 0))
 
+
+rmse_table <- house_metrics |>
+  rename(metric = .metric) |>
+  rename("Std Error" = std_err) |>
+  rename(RMSE = mean) |>
+  rename("Model" = model) |>
+  rename("Computations" = n) |>
+  select("Model", RMSE, "Std Error", "Computations") |> 
+  kbl(digits = c(NA, 2, 4, 0))
+
+
+
 save(house_metrics,
      rmse_table,
      file="results/rmse_table.rda")
