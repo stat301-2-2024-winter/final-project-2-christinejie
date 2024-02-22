@@ -56,14 +56,17 @@ registerDoMC(cores=num_cores)
 
 :::
 
-**Data Source**: [Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices)
+## Data Source
+[Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices)
 From Kaggle. 
 
-**Project Overview**: I want to predict house sale prices in Austin using variables such as number of bathrooms, number of bedrooms, and square feet of living space. This is a regression problem. 
+## Project Overview
+I want to predict house sale prices in Austin using variables such as number of bathrooms, number of bedrooms, and square feet of living space. This is a regression problem. 
 
-**Assessment Metric**: I will use RMSE to evaluate each model. 
+## Assessment Metric
+I will use RMSE to evaluate each model. 
 
-**Analysis Plan**
+## Analysis Plan
 
 Data Splitting: used prop = 0.75, strata = price_log10, breaks = 4. See `1_initial_setup.R`
 
@@ -73,7 +76,7 @@ Model Types: planning on using baseline, null, lasso, ridge, logistic, random fo
 
 Recipes: planning on creating 2 recipes: one standard and one tree based recipe. See `2_recipes.R`
 
-**Progress Summary**
+## Progress Summary
 
 1) Determined that variable of interest "latest_price" should be transformed using a base 10 log transformation. New outcome variable of interest is "pricelog_10". See `1_initial_setup.R`. 
 
@@ -85,14 +88,14 @@ Recipes: planning on creating 2 recipes: one standard and one tree based recipe.
 
 5) Created a table showing RMSE for each model. See `4_model_results.R`. 
 
-**RMSE Table for Baseline and Linear Models**
+## RMSE Table
 ```{r}
 #| echo: false
 rmse_table
 ```
 
 
-**Next Steps**
+## Next Steps
 
 1) Continue developing recipe, especially pay attention to interaction terms 
 
@@ -102,7 +105,7 @@ rmse_table
 
 4) Determine best model using metrics. 
 
-**Issues/Concerns**
+## Issues/Concerns
 
 1) Unsure of how to determine which variables need `step_interact()`
 

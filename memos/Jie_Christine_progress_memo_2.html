@@ -2757,7 +2757,20 @@ border: 0;
 
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-  
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#data-source" id="toc-data-source" class="nav-link active" data-scroll-target="#data-source">Data Source</a></li>
+  <li><a href="#project-overview" id="toc-project-overview" class="nav-link" data-scroll-target="#project-overview">Project Overview</a></li>
+  <li><a href="#assessment-metric" id="toc-assessment-metric" class="nav-link" data-scroll-target="#assessment-metric">Assessment Metric</a></li>
+  <li><a href="#analysis-plan" id="toc-analysis-plan" class="nav-link" data-scroll-target="#analysis-plan">Analysis Plan</a></li>
+  <li><a href="#progress-summary" id="toc-progress-summary" class="nav-link" data-scroll-target="#progress-summary">Progress Summary</a></li>
+  <li><a href="#rmse-table" id="toc-rmse-table" class="nav-link" data-scroll-target="#rmse-table">RMSE Table</a></li>
+  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next Steps</a></li>
+  <li><a href="#issuesconcerns" id="toc-issuesconcerns" class="nav-link" data-scroll-target="#issuesconcerns">Issues/Concerns</a></li>
+  </ul>
+</nav>
 </div>
 <main class="content" id="quarto-document-content">
 
@@ -2807,15 +2820,27 @@ Github Repo Link
 <p><a href="https://github.com/stat301-2-2024-winter/final-project-2-christinejie">https://github.com/stat301-2-2024-winter/final-project-2-christinejie</a></p>
 </div>
 </div>
-<p><strong>Data Source</strong>: <a href="https://www.kaggle.com/datasets/ericpierce/austinhousingprices">Austin, TX House Listings</a> From Kaggle.</p>
-<p><strong>Project Overview</strong>: I want to predict house sale prices in Austin using variables such as number of bathrooms, number of bedrooms, and square feet of living space. This is a regression problem.</p>
-<p><strong>Assessment Metric</strong>: I will use RMSE to evaluate each model.</p>
-<p><strong>Analysis Plan</strong></p>
+<section id="data-source" class="level2">
+<h2 class="anchored" data-anchor-id="data-source">Data Source</h2>
+<p><a href="https://www.kaggle.com/datasets/ericpierce/austinhousingprices">Austin, TX House Listings</a> From Kaggle.</p>
+</section>
+<section id="project-overview" class="level2">
+<h2 class="anchored" data-anchor-id="project-overview">Project Overview</h2>
+<p>I want to predict house sale prices in Austin using variables such as number of bathrooms, number of bedrooms, and square feet of living space. This is a regression problem.</p>
+</section>
+<section id="assessment-metric" class="level2">
+<h2 class="anchored" data-anchor-id="assessment-metric">Assessment Metric</h2>
+<p>I will use RMSE to evaluate each model.</p>
+</section>
+<section id="analysis-plan" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-plan">Analysis Plan</h2>
 <p>Data Splitting: used prop = 0.75, strata = price_log10, breaks = 4. See <code>1_initial_setup.R</code></p>
 <p>Resampling: used vfold_cv with 10 folds and 5 repeats. See <code>1_initial_setup.R</code></p>
 <p>Model Types: planning on using baseline, null, lasso, ridge, logistic, random forest, boosted tree. See <code>3_baseline.R</code> and <code>3_OLS.R</code></p>
 <p>Recipes: planning on creating 2 recipes: one standard and one tree based recipe. See <code>2_recipes.R</code></p>
-<p><strong>Progress Summary</strong></p>
+</section>
+<section id="progress-summary" class="level2">
+<h2 class="anchored" data-anchor-id="progress-summary">Progress Summary</h2>
 <ol type="1">
 <li><p>Determined that variable of interest “latest_price” should be transformed using a base 10 log transformation. New outcome variable of interest is “pricelog_10”. See <code>1_initial_setup.R</code>.</p></li>
 <li><p>Split and folded “house” dataset. See <code>1_initial_setup.R</code>.</p></li>
@@ -2823,7 +2848,9 @@ Github Repo Link
 <li><p>Defined and fit baseline/null and simple linear models using the standard recipe. Calculated RMSE for each model. See <code>3_baseline.R</code> and <code>3_OLS.R</code>.</p></li>
 <li><p>Created a table showing RMSE for each model. See <code>4_model_results.R</code>.</p></li>
 </ol>
-<p><strong>RMSE Table for Baseline and Linear Models</strong></p>
+</section>
+<section id="rmse-table" class="level2">
+<h2 class="anchored" data-anchor-id="rmse-table">RMSE Table</h2>
 <div class="cell">
 <div class="cell-output-display">
 
@@ -2832,7 +2859,7 @@ Github Repo Link
   <tr>
    <th style="text-align:left;"> Model </th>
    <th style="text-align:right;"> RMSE </th>
-   <th style="text-align:right;"> Std Error </th>
+   <th style="text-align:right;"> SE </th>
    <th style="text-align:right;"> Computations </th>
   </tr>
  </thead>
@@ -2840,13 +2867,13 @@ Github Repo Link
   <tr>
    <td style="text-align:left;"> Linear </td>
    <td style="text-align:right;"> 0.16 </td>
-   <td style="text-align:right;"> 0.0071 </td>
+   <td style="text-align:right;"> 0.007 </td>
    <td style="text-align:right;"> 50 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> Baseline </td>
    <td style="text-align:right;"> 0.24 </td>
-   <td style="text-align:right;"> 0.0013 </td>
+   <td style="text-align:right;"> 0.001 </td>
    <td style="text-align:right;"> 50 </td>
   </tr>
 </tbody>
@@ -2854,18 +2881,23 @@ Github Repo Link
 
 </div>
 </div>
-<p><strong>Next Steps</strong></p>
+</section>
+<section id="next-steps" class="level2">
+<h2 class="anchored" data-anchor-id="next-steps">Next Steps</h2>
 <ol type="1">
 <li><p>Continue developing recipe, especially pay attention to interaction terms</p></li>
 <li><p>Define and fit additional models as specified above</p></li>
 <li><p>Calculate RMSE for each model.</p></li>
 <li><p>Determine best model using metrics.</p></li>
 </ol>
-<p><strong>Issues/Concerns</strong></p>
+</section>
+<section id="issuesconcerns" class="level2">
+<h2 class="anchored" data-anchor-id="issuesconcerns">Issues/Concerns</h2>
 <ol type="1">
 <li><p>Unsure of how to determine which variables need <code>step_interact()</code></p></li>
 <li><p>I have very large data set and it takes a long time to run most things, I am using parallel processing but it’s still taking a long time</p></li>
 </ol>
+</section>
 
 </main>
 <!-- /main column -->
