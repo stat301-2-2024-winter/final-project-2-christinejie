@@ -63,7 +63,7 @@ house_folds <- vfold_cv(house_train,
 save(house_folds,
      file = "results/house_folds.rda")
 # 
-skimr::skim_without_charts(house)
+summary <-skimr::skim_without_charts(house)
 
 # log transform price 
 house |> 
