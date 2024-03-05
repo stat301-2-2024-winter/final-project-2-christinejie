@@ -51,10 +51,5 @@ bt_tuned <-
                            control = control_grid(save_workflow = TRUE))
 
 
-rmse_bt_ks <- lm_fit_ks %>% 
-  collect_metrics() %>% 
-  filter(.metric == "rmse")
-
-rmse_lm_ks
-
+bt_best <- show_best(bt_tuned, metric = "rmse")
 
