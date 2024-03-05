@@ -21,20 +21,43 @@ null_spec <- null_model() %>%
   set_engine("parsnip") %>% 
   set_mode("regression") 
 
-null_workflow <- workflow() %>% 
-  add_model(null_spec) %>% 
-  add_recipe(house_recipe_standard)
 
-null_fit <- null_workflow |> 
+#ks 
+null_workflow_ks <- workflow() %>% 
+  add_model(null_spec) %>% 
+  add_recipe(linear_ks)
+
+null_fit_ks <- null_workflow_ks |> 
   fit_resamples(
     resamples = house_folds, 
     control = control_resamples(save_workflow = TRUE)
   )
 
-
-rmse_null <- null_fit %>% 
+rmse_null_ks <- null_fit_ks %>% 
   collect_metrics() %>% 
   filter(.metric == "rmse")
+
+rmse_null_ks
+
+#fe 
+null_workflow_fe <- workflow() %>% 
+  add_model(null_spec) %>% 
+  add_recipe(linear_fe)
+
+null_fit_fe <- null_workflow_fe |> 
+  fit_resamples(
+    resamples = house_folds, 
+    control = control_resamples(save_workflow = TRUE)
+  )
+
+rmse_null_fe <- null_fit_fe %>% 
+  collect_metrics() %>% 
+  filter(.metric == "rmse")
+
+rmse_null_fe
+
+
+
 
 save(null_spec,
      null_workflow,

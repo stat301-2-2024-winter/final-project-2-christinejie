@@ -53,6 +53,7 @@ house_test <- testing(house_split)
 
 save(house_train, house_test, file = "results/house_split.rda")
 
+
 ## folds
 house_folds <- vfold_cv(house_train,
                         v = 10,
@@ -61,13 +62,46 @@ house_folds <- vfold_cv(house_train,
 
 save(house_folds,
      file = "results/house_folds.rda")
-
-
 # 
+skimr::skim_without_charts(house)
+
+# log transform price 
 house |> 
   ggplot(aes(x=price_log10)) + 
   geom_histogram(bins=100) 
 
+
+#step log bedrooms 
+house |> 
+  ggplot(aes(x=log(num_of_bedrooms))) + 
+  geom_histogram(bins=8) 
+
+house |> 
+  ggplot(aes(x=num_of_bedrooms)) + 
+  geom_histogram(bins=8) 
+
+
+#step log sq ft 
+house |> 
+  ggplot(aes(x=living_area_sq_ft)) + 
+  geom_histogram(bins=20) 
+
+house |> 
+  ggplot(aes(x=log(living_area_sq_ft))) + 
+  geom_histogram(bins=20) 
+
+#step log lot_size_sq_ft
+
+house |> 
+  ggplot(aes(x=lot_size_sq_ft)) + 
+  geom_histogram(bins=30) 
+
+house |> 
+  ggplot(aes(x=log(lot_size_sq_ft))) + 
+  geom_histogram(bins=30) 
+
+
+#step interact 
 house |> 
   ggplot(aes(x=median_students_per_teacher,y=avg_school_rating)) +
   geom_jitter()

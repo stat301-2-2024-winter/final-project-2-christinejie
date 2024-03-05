@@ -23,20 +23,46 @@ lm_spec <- linear_reg() |>
   set_mode("regression") |> 
   set_engine("lm")
 
-lm_workflow <- workflow() %>% 
+
+#ks 
+lm_workflow_ks <- workflow() %>% 
   add_model(lm_spec) %>% 
-  add_recipe(house_recipe_standard)
+  add_recipe(linear_ks)
 
 
-lm_fit <- lm_workflow |> 
+lm_fit_ks <- lm_workflow_ks |> 
   fit_resamples(
     resamples = house_folds, 
     control = control_resamples(save_workflow = TRUE)
   )
 
-rmse_lm <- lm_fit %>% 
+rmse_lm_ks <- lm_fit_ks %>% 
   collect_metrics() %>% 
   filter(.metric == "rmse")
+
+rmse_lm_ks
+
+
+#fe 
+
+lm_workflow_fe <- workflow() %>% 
+  add_model(lm_spec) %>% 
+  add_recipe(linear_fe)
+
+
+lm_fit_fe <- lm_workflow_fe |> 
+  fit_resamples(
+    resamples = house_folds, 
+    control = control_resamples(save_workflow = TRUE)
+  )
+
+rmse_lm_fe <- lm_fit_fe %>% 
+  collect_metrics() %>% 
+  filter(.metric == "rmse")
+
+rmse_lm_fe
+
+
 
 save(lm_spec,
      lm_workflow,
