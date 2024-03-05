@@ -46,9 +46,6 @@ linear_fe <- recipe(price_log10 ~ ., data = house_train) |>
   step_normalize(all_predictors()) |>
   step_log(num_of_bedrooms, living_area_sq_ft, lot_size_sq_ft) 
 
-  
-  
-
 prep_rec_lin_fe<- prep(linear_fe) |> 
   bake(new_data = NULL) 
 
@@ -56,8 +53,6 @@ prep_rec_lin_fe
 
 
 
-
-# kitchen sink tree 
 # Trees automatically detect non-linear relationships 
 # so we don’t need the natural spline step (it has been removed). 
 # Some of the other steps are not needed 
@@ -67,7 +62,7 @@ prep_rec_lin_fe
 # which turns one column into 5 — 
 # which is what causes the issue for the random forest algorithm.
 
-
+# kitchen sink tree 
 tree_ks <- recipe(price_log10 ~ ., data = house_train) |>
   step_rm(latest_price) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
@@ -79,14 +74,13 @@ prep_rec_tree_ks<- prep(tree_ks) |>
 prep_rec_tree_ks
 
 #featured engineering tree 
-
 tree_fe <- recipe(price_log10 ~ ., data = house_train) |>
   step_rm(latest_price) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
   step_zv(all_predictors()) |>
   step_log(num_of_bedrooms) |>
   step_log(living_area_sq_ft) |>
-  step_log(lot_size_sq_ft)
+  step_log(lot_size_sq_ft) 
 
 prep_rec_tree_ks<- prep(tree_ks) |> 
   bake(new_data = NULL) 
