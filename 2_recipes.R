@@ -36,15 +36,16 @@ prep_rec_lin_ks
 #remove property tax bc it's the same for everything, remove long and lat 
 
 linear_fe <- recipe(price_log10 ~ ., data = house_train) |>
-  step_rm(latest_price, property_tax_rate, latitude, longitude) |>
+  step_rm(latest_price) |>
   step_interact(terms = ~ median_students_per_teacher:avg_school_rating) |>
   step_interact(terms = ~ num_of_bathrooms:num_of_bedrooms) |>
   step_interact(terms =  ~ num_of_stories:living_area_sq_ft) |>
   step_interact(terms =  ~ parking_spaces:garage_spaces) |>
+  step_interact(terms = ~ num_of_primary_schools:num_of_elementary_schools) |>
   step_dummy(all_nominal_predictors()) |>
-  step_zv(all_predictors()) |>
+  step_nzv(all_predictors()) |>
   step_normalize(all_predictors()) |>
-  step_log(num_of_bedrooms, living_area_sq_ft, lot_size_sq_ft) 
+  step_log(num_of_bedrooms, living_area_sq_ft, lot_size_sq_ft)
 
 prep_rec_lin_fe<- prep(linear_fe) |> 
   bake(new_data = NULL) 
@@ -77,10 +78,8 @@ prep_rec_tree_ks
 tree_fe <- recipe(price_log10 ~ ., data = house_train) |>
   step_rm(latest_price) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
-  step_zv(all_predictors()) |>
-  step_log(num_of_bedrooms) |>
-  step_log(living_area_sq_ft) |>
-  step_log(lot_size_sq_ft) 
+  step_nzv(all_predictors()) |>
+  step_log(num_of_bedrooms, living_area_sq_ft, lot_size_sq_ft)
 
 prep_rec_tree_ks<- prep(tree_ks) |> 
   bake(new_data = NULL) 

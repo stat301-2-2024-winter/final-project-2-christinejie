@@ -33,23 +33,26 @@ boosted_tree_mod <- boost_tree(
   set_engine("xgboost")
 
 
-bt_workflow <- workflow() |> 
+bt_workflow_ks <- workflow() |> 
   add_model(boosted_tree_mod) |> 
   add_recipe(tree_ks)
 
 bt_params <- extract_parameter_set_dials(boosted_tree_mod) |> 
-  update(mtry = mtry(c(1, 14))) |> 
+  update(mtry = mtry(c(1, 7))) |> 
   update(learn_rate = learn_rate(c(-5, -0.2)))
 
 # build tuning grid
 bt_grid <- grid_regular(bt_params, levels = 5)
 
 
-bt_tuned <-
-  bt_workflow |> tune_grid(house_folds,
+bt_tuned_ks <-
+  bt_workflow_ks |> tune_grid(house_folds,
                            grid = bt_grid,
                            control = control_grid(save_workflow = TRUE))
 
 
 bt_best <- show_best(bt_tuned, metric = "rmse")
 
+
+save(bt_tuned_ks,
+     file="results/bt_tuned_ks.rda")

@@ -66,52 +66,72 @@ save(house_folds,
 summary <-skimr::skim_without_charts(house)
 
 # log transform price 
-house |> 
+house_train |> 
   ggplot(aes(x=price_log10)) + 
   geom_histogram(bins=100) 
 
 
 #step log bedrooms 
-house |> 
+house_train |> 
   ggplot(aes(x=log(num_of_bedrooms))) + 
   geom_histogram(bins=8) 
 
-house |> 
+house_train |> 
   ggplot(aes(x=num_of_bedrooms)) + 
   geom_histogram(bins=8) 
 
 
 #step log sq ft 
-house |> 
+house_train |> 
   ggplot(aes(x=living_area_sq_ft)) + 
   geom_histogram(bins=20) 
 
-house |> 
+house_train |> 
   ggplot(aes(x=log(living_area_sq_ft))) + 
   geom_histogram(bins=20) 
 
 #step log lot_size_sq_ft
 
-house |> 
+house_train |> 
   ggplot(aes(x=lot_size_sq_ft)) + 
   geom_histogram(bins=30) 
 
-house |> 
+house_train |> 
   ggplot(aes(x=log(lot_size_sq_ft))) + 
   geom_histogram(bins=30) 
 
 
+# yr built 
+
+house_train |> 
+  ggplot(aes(x=year_built)) + 
+  geom_histogram(bins=30) 
+
+house_train |> 
+  ggplot(aes(x=log(year_built))) + 
+  geom_histogram(bins=30) 
+
+house_train |> 
+  ggplot(aes(x=log(latest_price),y=log(year_built))) +
+  geom_jitter()
+
+#schools
+house_train |> 
+  ggplot(aes(x=(num_of_primary_schools),y=(num_of_elementary_schools))) +
+  geom_jitter()
+
+
 #step interact 
-house |> 
+house_train |> 
   ggplot(aes(x=median_students_per_teacher,y=avg_school_rating)) +
   geom_jitter()
 
 
-house |> 
+house_train |> 
   ggplot(aes(x=num_of_bathrooms,y=num_of_bedrooms)) +
   geom_jitter()
 
-corr<-house |> 
+corr<-house_train |> 
   select(where(is.numeric)) |> 
   cor()
 
