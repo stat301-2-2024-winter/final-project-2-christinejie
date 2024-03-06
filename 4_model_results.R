@@ -31,7 +31,7 @@ rmse_table <- house_metrics |>
   rename("Model" = model) |>
   rename("Computations" = n) |>
   select("Model", RMSE, "SE", "Computations") |> 
-  kbl(digits = c(NA, 2, 3, 0))
+  knitr::kable(digits = c(NA, 2, 3, 0))
 
 
 
