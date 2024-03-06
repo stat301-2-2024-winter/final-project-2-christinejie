@@ -41,7 +41,7 @@ save(lm_fit_ks,
 
 lm_workflow_fe <- workflow() %>% 
   add_model(lm_spec) %>% 
-  add_recipe(tree_fe)
+  add_recipe(linear_fe)
 
 
 lm_fit_fe <- lm_workflow_fe |> 

@@ -13,7 +13,7 @@ tidymodels_prefer()
 library(doMC)
 num_cores <- parallel::detectCores(logical=TRUE)
 registerDoMC(cores=num_cores)
-
+num_cores
 # model specifications ----
 rf_mod <- 
   rand_forest(
@@ -42,7 +42,7 @@ rf_tuned_ks <- tune_grid(
   rf_workflow_ks,
   house_folds,
   grid = rf_grid,
-  control = control_grid(save_workflow = TRUE)
+  control = control_grid(save_workflow = TRUE , verbose = TRUE)
 )
 
 # write out results (fitted/trained workflows) ----

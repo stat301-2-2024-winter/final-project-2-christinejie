@@ -21,11 +21,7 @@ registerDoMC(cores=num_cores)
 
 #kitchen sink standard 
 linear_ks <- recipe(price_log10 ~ ., data = house_train) |>
-  step_rm(latest_price,
-          year_built,
-          num_price_changes,
-          num_of_accessibility_features,
-          num_of_community_features) |> 
+  step_rm(latest_price) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
   step_zv(all_predictors()) |>
   step_normalize(all_predictors()) 
@@ -40,12 +36,14 @@ prep_rec_lin_ks
 #remove property tax bc it's the same for everything, remove long and lat 
 
 linear_fe <- recipe(price_log10 ~ ., data = house_train) |>
-  step_rm(latest_price) |>
-  step_interact(terms = ~ median_students_per_teacher:avg_school_rating) |>
+  step_rm(latest_price,
+          year_built,
+          num_price_changes,
+          num_of_accessibility_features,
+          num_of_community_features) |>
   step_interact(terms = ~ num_of_bathrooms:num_of_bedrooms) |>
   step_interact(terms =  ~ num_of_stories:living_area_sq_ft) |>
   step_interact(terms =  ~ parking_spaces:garage_spaces) |>
-  step_interact(terms = ~ num_of_primary_schools:num_of_elementary_schools) |>
   step_dummy(all_nominal_predictors()) |>
   step_nzv(all_predictors()) |>
   step_normalize(all_predictors()) |>

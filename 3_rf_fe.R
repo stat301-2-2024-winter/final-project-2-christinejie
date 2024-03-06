@@ -42,7 +42,7 @@ rf_tuned_fe <- tune_grid(
   rf_workflow_fe,
   house_folds,
   grid = rf_grid,
-  control = control_grid(save_workflow = TRUE)
+  control = control_grid(save_workflow = TRUE, verbose = TRUE)
 )
 
 # write out results (fitted/trained workflows) ----

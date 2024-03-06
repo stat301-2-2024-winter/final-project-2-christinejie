@@ -51,9 +51,9 @@ house_split <- house |>
 house_train <- training(house_split)
 house_test <- testing(house_split)
 
-save(house_train, house_test, file = "results/house_split.rda")
+save(house_train, house_test, file = "initial_processing/house_split.rda")
 
-
+load(here::here("initial_processing/house_split.rda"))
 ## folds
 house_folds <- vfold_cv(house_train,
                         v = 10,
