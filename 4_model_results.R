@@ -41,32 +41,53 @@ knn_best_ks <- knn_fit_ks |>
   show_best("rmse") |> 
   slice_min(mean) 
 
+lasso_best_ks <-lasso_fit_ks |> 
+  collect_metrics()
+
 lasso_best_fe <- lasso_fit_fe |> 
- collect_metrics()
+  collect_metrics()
 
-lasso_best_ks <- lasso_fit_ks |> 
-  show_best("rmse") |> 
-  slice_min(mean) 
+lm_best_ks <- lm_fit_ks |> 
+  collect_metrics()
 
-### 
-carseat_metrics <- bind_rows(
-  knn_metrics %>% mutate(model = "Nearest Neighbors"),
-  rf_metrics %>% mutate(model = "Random Forest"),
-  bt_metrics %>% mutate(model = "Boosted Tree")
+lm_best_fe <- lm_fit_fe |> 
+  collect_metrics()
+
+
+ridge_best_fe <- ridge_fit_fe |> 
+  collect_metrics()
+
+ridge_best_ks <- ridge_fit_ks |> 
+  collect_metrics()
+
+
+
+house_metrics <- bind_rows(
+  bt_best_fe %>% mutate(model = "BT FE"),
+  bt_best_ks %>% mutate(model = "BT KS"),
+  knn_best_fe %>% mutate(model = "KNN FE"),
+  knn_best_ks  %>% mutate(model = "KNN KS"),
+  lasso_best_fe |> mutate(model = "Lasso FE"),
+  lasso_best_ks |>  mutate(model = "Lasso KS"),
+  lm_best_fe |>  mutate(model = "Linear FE"),
+  lm_best_ks |>  mutate(model = "Linear KS"),
+  ridge_best_fe |> mutate(model = "Ridge FE"),
+  ridge_best_ks |> mutate(model = "Ridge KS")
 )
 
-### 
-rmse_table <- house_metrics |>
-  rename(metric = .metric) |>
-  rename("SE" = std_err) |>
+rmse_table <- house_metrics %>%
+  filter(.metric == "rmse") |> 
+  rename("Standard Error" = std_err) |>
   rename(RMSE = mean) |>
-  rename("Model" = model) |>
-  rename("Computations" = n) |>
-  select("Model", RMSE, "SE", "Computations") |> 
-  knitr::kable(digits = c(NA, 2, 3, 0))
+  rename("Model Type" = model) |>
+  rename("Number Computations" = n) |>
+  arrange(RMSE) |> 
+  select("Model Type", RMSE, "Standard Error") %>%
+  knitr::kable(digits = c(NA, 2, 4, 0))
+  
 
 
 
 save(house_metrics,
      rmse_table,
-     file="results/rmse_table.rda")
+     file="results/model_results.rda")

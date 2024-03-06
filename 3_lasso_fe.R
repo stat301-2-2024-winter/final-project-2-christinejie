@@ -24,7 +24,7 @@ lasso_mod <- linear_reg(penalty = 0.01, mixture = 1) %>%
 #workflow 
 lasso_workflow_fe <- workflow() |>
   add_model(lasso_mod) |>
-  add_recipe(linear_fe)
+  add_recipe(tree_fe)
 
 keep_pred <- control_resamples(save_pred = TRUE)
 
@@ -34,6 +34,8 @@ lasso_fit_fe <- fit_resamples(
   resamples = house_folds,
   control = keep_pred
 )
+
+collect_metrics(lasso_fit_fe)
 
 save(lasso_fit_fe,
      file="results/lasso_fit_fe.rda")

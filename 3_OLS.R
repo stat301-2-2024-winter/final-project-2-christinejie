@@ -41,7 +41,7 @@ save(lm_fit_ks,
 
 lm_workflow_fe <- workflow() %>% 
   add_model(lm_spec) %>% 
-  add_recipe(linear_fe)
+  add_recipe(tree_fe)
 
 
 lm_fit_fe <- lm_workflow_fe |> 
@@ -53,4 +53,5 @@ lm_fit_fe <- lm_workflow_fe |>
 save(lm_fit_fe,
      file="results/lm_fit_fe.rda")
 
-
+lm_fit_fe |> 
+  collect_metrics()
