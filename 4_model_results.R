@@ -85,7 +85,7 @@ rmse_table <- house_metrics %>%
   select("Model Type", RMSE, "Standard Error") %>%
   knitr::kable(digits = c(NA, 2, 4, 0))
   
-
+rmse_table
 
 
 save(house_metrics,
