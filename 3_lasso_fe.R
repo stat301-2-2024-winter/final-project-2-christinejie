@@ -17,7 +17,6 @@ library(doMC)
 num_cores <- parallel::detectCores(logical=TRUE)
 registerDoMC(cores=num_cores)
 
-
 lasso_mod <- linear_reg(penalty = 0.01, mixture = 1) %>%
   set_engine("glmnet") |>  
   set_mode("regression")
@@ -26,6 +25,7 @@ lasso_mod <- linear_reg(penalty = 0.01, mixture = 1) %>%
 lasso_workflow_fe <- workflow() |>
   add_model(lasso_mod) |>
   add_recipe(linear_fe)
+
 keep_pred <- control_resamples(save_pred = TRUE)
 
 # fitting models 

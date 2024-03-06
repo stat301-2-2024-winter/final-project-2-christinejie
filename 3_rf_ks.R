@@ -18,7 +18,7 @@ registerDoMC(cores=num_cores)
 rf_mod <- 
   rand_forest(
     mode = "regression",
-    trees = 1000, 
+    trees = 500, 
     min_n = tune(),
     mtry = tune()
   ) |> 

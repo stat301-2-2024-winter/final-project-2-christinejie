@@ -1,18 +1,21 @@
-load(here::here("results/house.rda"))
-load(here::here("results/house_split.rda"))
-load(here::here("results/house_folds.rda"))
-load(here::here("results/house_recipe.rda"))
-load(here::here("results/null.rda"))
-load(here::here("results/lm.rda"))
+load(here::here("results/bt_tuned_fe.rda"))
+load(here::here("results/bt_tuned_ks.rda"))
+load(here::here("results/knn_tuned_fe.rda"))
+load(here::here("results/knn_tuned_ks.rda"))
+load(here::here("results/lasso_fit_fe.rda"))
+load(here::here("results/lasso_fit_ks.rda"))
+load(here::here("results/lm_fit_fe.rda"))
+load(here::here("results/lm_fit_ks.rda"))
+load(here::here("results/null_fit_fe.rda"))
+load(here::here("results/null_fit_ks.rda"))
+load(here::here("results/ridge_fit_fe.rda"))
+load(here::here("results/ridge_fit_ks.rda"))
+
+library(dplyr)
 library(tidyverse)
 library(rsample)
-library(parsnip)
 library(tidymodels)
-library(glmnet)
-library(ranger)
-library(kknn)
 library(kableExtra)
-set.seed(123)
 library(here)
 tidymodels_prefer()
 library(doMC)
@@ -20,10 +23,39 @@ num_cores <- parallel::detectCores(logical=TRUE)
 registerDoMC(cores=num_cores)
 
 
-house_metrics <- bind_rows(rmse_lm %>% mutate(model = "Linear"),
-                           rmse_null %>% mutate(model = "Baseline"))
+#table 
 
+bt_best_fe <- bt_tuned_fe |> 
+  show_best("rmse") |> 
+  slice_min(mean) 
 
+bt_best_ks <- bt_tuned_ks |> 
+  show_best("rmse") |> 
+  slice_min(mean) 
+
+knn_best_fe <- knn_fit_fe |> 
+  show_best("rmse") |> 
+  slice_min(mean) 
+
+knn_best_ks <- knn_fit_ks |> 
+  show_best("rmse") |> 
+  slice_min(mean) 
+
+lasso_best_fe <- lasso_fit_fe |> 
+ collect_metrics()
+
+lasso_best_ks <- lasso_fit_ks |> 
+  show_best("rmse") |> 
+  slice_min(mean) 
+
+### 
+carseat_metrics <- bind_rows(
+  knn_metrics %>% mutate(model = "Nearest Neighbors"),
+  rf_metrics %>% mutate(model = "Random Forest"),
+  bt_metrics %>% mutate(model = "Boosted Tree")
+)
+
+### 
 rmse_table <- house_metrics |>
   rename(metric = .metric) |>
   rename("SE" = std_err) |>
