@@ -1,9 +1,6 @@
-load(here::here("results/house.rda"))
-load(here::here("results/house_split.rda"))
-load(here::here("results/house_folds.rda"))
-load(here::here("results/house_recipe.rda"))
-load(here::here("results/lm.rda"))
-load(here::here("results/null.rda"))
+load(here::here("initial_processing/house_split.rda"))
+load(here::here("initial_processing/house_folds.rda"))
+load(here::here("initial_processing/house_recipe.rda"))
 library(tidyverse)
 library(rsample)
 library(parsnip)
@@ -36,11 +33,8 @@ lm_fit_ks <- lm_workflow_ks |>
     control = control_resamples(save_workflow = TRUE)
   )
 
-rmse_lm_ks <- lm_fit_ks %>% 
-  collect_metrics() %>% 
-  filter(.metric == "rmse")
-
-rmse_lm_ks
+save(lm_fit_ks,
+     file="results/lm_fit_ks.rda")
 
 
 #fe 
@@ -56,16 +50,7 @@ lm_fit_fe <- lm_workflow_fe |>
     control = control_resamples(save_workflow = TRUE)
   )
 
-rmse_lm_fe <- lm_fit_fe %>% 
-  collect_metrics() %>% 
-  filter(.metric == "rmse")
-
-rmse_lm_fe
+save(lm_fit_fe,
+     file="results/lm_fit_fe.rda")
 
 
-
-save(lm_spec,
-     lm_workflow,
-     lm_fit,
-     rmse_lm,
-     file="results/lm.rda")

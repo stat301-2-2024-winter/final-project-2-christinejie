@@ -21,7 +21,11 @@ registerDoMC(cores=num_cores)
 
 #kitchen sink standard 
 linear_ks <- recipe(price_log10 ~ ., data = house_train) |>
-  step_rm(latest_price) |> 
+  step_rm(latest_price,
+          year_built,
+          num_price_changes,
+          num_of_accessibility_features,
+          num_of_community_features) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
   step_zv(all_predictors()) |>
   step_normalize(all_predictors()) 
@@ -76,10 +80,13 @@ prep_rec_tree_ks
 
 #featured engineering tree 
 tree_fe <- recipe(price_log10 ~ ., data = house_train) |>
-  step_rm(latest_price) |> 
+  step_rm(latest_price,
+          year_built,
+          num_price_changes,
+          num_of_accessibility_features,
+          num_of_community_features) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
-  step_nzv(all_predictors()) |>
-  step_log(num_of_bedrooms, living_area_sq_ft, lot_size_sq_ft)
+  step_nzv(all_predictors()) 
 
 prep_rec_tree_ks<- prep(tree_ks) |> 
   bake(new_data = NULL) 
