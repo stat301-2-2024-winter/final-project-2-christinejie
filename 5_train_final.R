@@ -12,8 +12,8 @@ library(here)
 tidymodels_prefer()
 set.seed(123)
 library(doMC)
-num_cores <- parallel::detectCores(logical=TRUE)
-registerDoMC(cores=num_cores)
+num_cores <- parallel::detectCores(logical = TRUE)
+registerDoMC(cores = num_cores)
 
 final_wflow <-
   rf_tuned_fe |>
@@ -22,15 +22,3 @@ final_wflow <-
 
 final_fit <- fit(final_wflow, house_train)
 
-### 
-house_metrics_final <- metric_set(rmse, rsq, mae, mape)
-
-
-house_predict_rf <- house_test |>
-  select(price_log10) |>
-  bind_cols(10^predict(final_fit, house_test))
-
-
-house_final_metrics <-
-  house_metrics_final(house_predict_rf, price_log10, .pred) |>
-  knitr::kable (digits = 3)
