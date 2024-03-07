@@ -19,7 +19,6 @@ registerDoMC(cores = num_cores)
 ###
 house_metrics_final <- metric_set(rmse, rsq, mae)
 
-
 house_predict_rf_not_log <- house_test |>
   mutate(price = 10 ^ price_log10) |>
   select(price) |>

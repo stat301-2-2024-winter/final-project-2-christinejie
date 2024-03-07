@@ -20,5 +20,5 @@ final_wflow <-
   extract_workflow() |>
   finalize_workflow(select_best(rf_tuned_fe, metric = "rmse"))
 
-final_fit <- fit(final_wflow, house_train)
 
+final_fit <- fit(final_wflow, house_train)
