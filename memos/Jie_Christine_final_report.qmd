@@ -1,0 +1,80 @@
+---
+title: "Austin, TX: Housing Prices"
+subtitle: "Data Science 2 with R (STAT 301-2)"
+author: "Christine Jie"
+date: today
+
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    embed-resources: true
+    code-fold: show
+    link-external-newwindow: true
+    
+execute:
+  warning: false
+  
+from: markdown+emoji
+
+reference-location: margin
+citation-location: margin
+---
+
+::: {.callout-tip icon="false"}
+## Github Repo Link
+
+[https://github.com/stat301-2-2024-winter/final-project-2-christinejie](https://github.com/stat301-2-2024-winter/final-project-2-christinejie)
+:::
+
+```{r}
+#| echo: false
+load(here::here("initial_processing/price"))
+load(here::here("initial_processing/house_split.rda"))
+```
+
+
+
+
+## Introduction 
+I wish to predict the sales price of houses in Austin, Texas using the models we learned this quarter. I used a data set from Kaggle called [Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices). 
+
+My motivation for creating this model is because I truly enjoy browsing real estate websites in my free time. I have always been curious about the factors that influence the price of a home, including number of bedrooms, square footage, and quality of local schools. As an economics major, I'm also aware that housing prices are a large reflection of the local economy. 
+
+The data set that I chose consists of over 15,000 home listings, including both categorical and numerical variables. 
+
+## Data Overview
+```{r}
+#| echo: false
+skimr::skim_without_charts(house)
+```
+There are no variables with any missingness. 
+```{r}
+#| echo: false
+price_not_log
+```
+The `latest_price` variable my response variable. From this graph, we can see this variable is heavily right-skewed, so I decided to transform it using a log10 transformation. 
+
+```{r}
+#| echo: false
+price_log
+```
+This is my new response variable that I will be working with for the rest of the project, `price_log10`, which is approximately normally distributed. 
+
+## Methods
+
+
+## Model Building and Selection 
+
+
+## Final Model Analysis 
+
+
+## Conclusion 
+
+
+## References 
+
+
+## Appendix EDA
+

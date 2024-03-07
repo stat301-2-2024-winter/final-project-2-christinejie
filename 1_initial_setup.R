@@ -51,7 +51,7 @@ house_split <- house |>
 house_train <- training(house_split)
 house_test <- testing(house_split)
 
-save(house_train, house_test, file = "initial_processing/house_split.rda")
+save(house, house_train, house_test, file = "initial_processing/house_split.rda")
 
 load(here::here("initial_processing/house_split.rda"))
 ## folds
@@ -63,12 +63,23 @@ house_folds <- vfold_cv(house_train,
 save(house_folds,
      file = "results/house_folds.rda")
 # 
-summary <-skimr::skim_without_charts(house)
+summary <-skimr::skim_without_charts(house_train)
+
+price_not_log <- house_train |> 
+  ggplot(aes(x=latest_price)) + 
+  geom_histogram(bins=50) 
+
 
 # log transform price 
-house_train |> 
+price_log<-house_train |> 
   ggplot(aes(x=price_log10)) + 
-  geom_histogram(bins=100) 
+  geom_histogram(bins=50) 
+
+
+save(summary,
+     price_not_log,
+     price_log,
+     file=here::here("initial_processing/price"))
 
 
 #step log bedrooms 
