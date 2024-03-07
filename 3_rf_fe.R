@@ -29,7 +29,7 @@ extract_parameter_set_dials(rf_mod)
 # define workflows ----
 rf_workflow_fe <- workflow() |> 
   add_model(rf_mod) |> 
-  add_recipe(tree_fe)
+  add_recipe(linear_fe)
 
 
 # hyperparameter tuning values ----
@@ -46,4 +46,6 @@ rf_tuned_fe <- tune_grid(
 )
 
 # write out results (fitted/trained workflows) ----
-save(rf_tuned_fe,file=here("results/rf_tuned_fe.rda"))
+save(rf_tuned_fe,
+     rf_workflow_fe, 
+     file=here("results/rf_tuned_fe.rda"))
