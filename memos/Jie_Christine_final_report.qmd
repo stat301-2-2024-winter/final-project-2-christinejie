@@ -31,6 +31,7 @@ citation-location: margin
 #| echo: false
 load(here::here("initial_processing/price"))
 load(here::here("initial_processing/house_split.rda"))
+load(here::here("results/model_results.rda"))
 ```
 
 
@@ -39,7 +40,7 @@ load(here::here("initial_processing/house_split.rda"))
 ## Introduction 
 I wish to predict the sales price of houses in Austin, Texas using the models we learned this quarter. I used a data set from Kaggle called [Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices). 
 
-My motivation for creating this model is because I truly enjoy browsing real estate websites in my free time. I have always been curious about the factors that influence the price of a home, including number of bedrooms, square footage, and quality of local schools. As an economics major, I'm also aware that housing prices are a large reflection of the local economy. 
+My motivation for creating this model is because I truly enjoy browsing real estate websites in my free time. I have always been curious about the factors that influence the price of a home, including whether it has parking, number of bedrooms, square footage, and quality of local schools. As an economics major, I'm also aware that housing prices are a large reflection of the local economy. 
 
 The data set that I chose consists of over 15,000 home listings, including both categorical and numerical variables. 
 
@@ -63,8 +64,94 @@ This is my new response variable that I will be working with for the rest of the
 
 ## Methods
 
+**Overview**
+This is a regression and prediction problem because we are predicting house prices using a variety of variables. 
+
+**Data Splitting**
+I used 75% of the data for training the models and the remaining 25% for testing the models. 
+
+**Model Types**
+
+1) Baseline 
+
+2) Boosted Tree (bt)
+
+3) Elastic Net (en)
+
+4) K - Nearest Neighbors (knn)
+
+5) Simple Linear (lm)
+
+6) Random Forest (rf)
+
+**Tuning Parameters**
+
+For the Boosted Tree model, I tuned the mtry and learn_rate parameters. Mtry is the number of sampled predictors and learn_rate is weight for the influence of each new tree. 
+
+For the Elastic Net model, the penalty and mixture parameters. Penalty is a term added during training to discourage or overfitting. Mixture controls whether the elastic model is more like a ridge model (mixture = 0) or more like a lasso model (mixture = 1). 
+
+For the Random Forest model, I tuned the min_n and mtry parameters. min_n is the number of data points to split and mtry is the number of sampled predictors. 
+
+For the K-Nearest Neighbors model, I tuned the neighbors parameter. neighbors is the number of nearest neighbors used when making predictions. 
+
+**Resampling**
+Resampling is when you choose random samples from the initial training dataset with replacement to estimate the population parameter repeatedly. I used v-fold cross validation with 10 folds and 5 repeats. This means the data was divided into 10 sets of equal size and we are fitting/training each model 50 times.
+
+
+**Recipe Buiding** I built 4 recipes. 
+
+1) Standard baseline/kitchen sink recipe where I used all of the predictor variables. 
+
+2) Standard Feature Engineered recipe where I removed variables that had only a few levels which had little predictive power. I also interacted the variables for number of bathrooms and number of bedrooms to account for dependencies between these variables. (See appendix for EDA)
+
+3) Tree based baseline recipe where I used all of the predictor variables. 
+
+4) Tree based Feature Engineered recipe where I removed variables that had only a few levels which had little predictive power. 
+
+**Evaluation Metric**
+The metric that was used to compare models was root mean squared error, or RMSE. RMSE measures the average deviation of the predicted values from the actual values in the dataset.
 
 ## Model Building and Selection 
+
+**Evaluation Metric**
+RMSE will be used to compare the models, which measures the average deviation of the predicted values from the actual values in the dataset. 
+
+**Table of Best Performing Model Results**
+```{r}
+#| echo: false
+rmse_table
+```
+
+```{r}
+#| echo: false
+best_rf
+```
+The best model is the one with the lowest RMSE. Here, it is the random forest model using the tree based featured engineered recipe with mtry = 7 and min_n = 2. This means the best random forest model had 7 data points to split and 2 sampled predictors. 
+
+
+
+
+
+
+
+This would be a good section to describe what the best parameters were for each model type. 
+
+
+Could include a discussion comparing any systematic differences in performance between model types or recipes. 
+
+
+If variations in recipes were used to explore predictive importance of certain variables, then it should be discussed here. 
+
+The section will likely end with the selection of the final/winning model (provide your reasoning). 
+
+
+
+Was it surprising or not surprising that this particular model won? Explain.
+
+
+
+
+
 
 
 ## Final Model Analysis 

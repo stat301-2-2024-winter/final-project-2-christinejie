@@ -12,6 +12,8 @@ load(here::here("results/ridge_fit_fe.rda"))
 load(here::here("results/ridge_fit_ks.rda"))
 load(here::here("results/rf_tuned_fe.rda"))
 load(here::here("results/rf_tuned_ks.rda"))
+load(here::here("results/en_tuned_fe.rda"))
+load(here::here("results/en_tuned_ks.rda"))
 library(dplyr)
 library(tidyverse)
 library(rsample)
@@ -105,12 +107,46 @@ rmse_table <- house_metrics %>%
   rename("Model Type" = model) |>
   rename("Number Computations" = n) |>
   arrange(RMSE) |> 
-  select("Model Type", RMSE, "Standard Error") %>%
-  knitr::kable(digits = c(NA, 2, 4, 0))
+  select("Model Type", RMSE, "Standard Error") |>
+  knitr::kable(digits = c(NA, 3, 2))
   
+rmse_table <- house_metrics %>%
+  filter(.metric == "rmse") |> 
+  rename("Standard Error" = std_err) |>
+  rename(RMSE = mean) |>
+  rename("Model Type" = model) |>
+  rename("Number Computations" = n) |>
+  arrange(RMSE) |> 
+  select("Model Type", RMSE, "Standard Error") |>
+  knitr::kable(
+    digits = c(NA, 4, 4),
+    align = c("l", "r", "r"),  # Align text columns to the left, numeric columns to the right
+    caption = "<b>RMSE Metrics for Different Models</b>",  # Add a bold caption using HTML formatting
+    format = "html",  # Use HTML formatting
+    col.names = c("Model Type", "RMSE", "Standard Error"),  # Rename column names
+    table.attr = "style='width:80%;margin-left:auto;margin-right:auto;'"  # Adjust table width and center align
+  )
+
+library(kableExtra)
+
+library(kableExtra)
+
+best_rf <- rf_tuned_fe |> 
+  select_best() |> 
+  select(mtry, min_n) |> 
+  knitr::kable(caption = "<b>Best Parameters for RF Model</b>") %>%
+  kableExtra::kable_styling(full_width = FALSE)
+
+library(kableExtra)
+
+
+
+
+
 rmse_table
 
 
 save(house_metrics,
      rmse_table,
+     best_rf,
      file="results/model_results.rda")

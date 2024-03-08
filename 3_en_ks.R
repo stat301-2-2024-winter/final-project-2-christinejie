@@ -44,7 +44,8 @@ en_tuned_ks <-
     house_folds,
     grid = en_grid,
     control = control_grid(save_workflow = TRUE))
-
+save(en_tuned_ks,
+     file="results/en_tuned_ks.rda")
 
 en_best_ks <- show_best(en_tuned_ks, metric = "rmse")
 

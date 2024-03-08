@@ -49,5 +49,7 @@ en_tuned_fe <-
 
 en_best_fe <- show_best(en_tuned_fe, metric = "rmse")
 
+save(en_tuned_fe,
+     file="results/en_tuned_fe.rda")
 
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Christine Jie">
-<meta name="dcterms.date" content="2024-03-06">
+<meta name="dcterms.date" content="2024-03-07">
 
 <title>Austin, TX: Housing Prices</title>
 <style>
@@ -2569,7 +2569,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 6, 2024</p>
+      <p class="date">March 7, 2024</p>
     </div>
   </div>
     
@@ -2597,7 +2597,7 @@ Github Repo Link
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 <p>I wish to predict the sales price of houses in Austin, Texas using the models we learned this quarter. I used a data set from Kaggle called <a href="https://www.kaggle.com/datasets/ericpierce/austinhousingprices">Austin, TX House Listings</a>.</p>
-<p>My motivation for creating this model is because I truly enjoy browsing real estate websites in my free time. I have always been curious about the factors that influence the price of a home, including number of bedrooms, square footage, and quality of local schools. As an economics major, I’m also aware that housing prices are a large reflection of the local economy.</p>
+<p>My motivation for creating this model is because I truly enjoy browsing real estate websites in my free time. I have always been curious about the factors that influence the price of a home, including whether it has parking, number of bedrooms, square footage, and quality of local schools. As an economics major, I’m also aware that housing prices are a large reflection of the local economy.</p>
 <p>The data set that I chose consists of over 15,000 home listings, including both categorical and numerical variables.</p>
 </section>
 <section id="data-overview" class="level2">
@@ -3185,9 +3185,142 @@ Github Repo Link
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<p><strong>Overview</strong> This is a regression and prediction problem because we are predicting house prices using a variety of variables.</p>
+<p><strong>Data Splitting</strong> I used 75% of the data for training the models and the remaining 25% for testing the models.</p>
+<p><strong>Model Types</strong></p>
+<ol type="1">
+<li><p>Baseline</p></li>
+<li><p>Boosted Tree (bt)</p></li>
+<li><p>Elastic Net (en)</p></li>
+<li><p>K - Nearest Neighbors (knn)</p></li>
+<li><p>Simple Linear (lm)</p></li>
+<li><p>Random Forest (rf)</p></li>
+</ol>
+<p><strong>Tuning Parameters</strong></p>
+<p>For the Boosted Tree model, I tuned the mtry and learn_rate parameters. Mtry is the number of sampled predictors and learn_rate is weight for the influence of each new tree.</p>
+<p>For the Elastic Net model, the penalty and mixture parameters. Penalty is a term added during training to discourage or overfitting. Mixture controls whether the elastic model is more like a ridge model (mixture = 0) or more like a lasso model (mixture = 1).</p>
+<p>For the Random Forest model, I tuned the min_n and mtry parameters. min_n is the number of data points to split and mtry is the number of sampled predictors.</p>
+<p>For the K-Nearest Neighbors model, I tuned the neighbors parameter. neighbors is the number of nearest neighbors used when making predictions.</p>
+<p><strong>Resampling</strong> Resampling is when you choose random samples from the initial training dataset with replacement to estimate the population parameter repeatedly. I used v-fold cross validation with 10 folds and 5 repeats. This means the data was divided into 10 sets of equal size and we are fitting/training each model 50 times.</p>
+<p><strong>Recipe Buiding</strong> I built 4 recipes.</p>
+<ol type="1">
+<li><p>Standard baseline/kitchen sink recipe where I used all of the predictor variables.</p></li>
+<li><p>Standard Feature Engineered recipe where I removed variables that had only a few levels which had little predictive power. I also interacted the variables for number of bathrooms and number of bedrooms to account for dependencies between these variables. (See appendix for EDA)</p></li>
+<li><p>Tree based baseline recipe where I used all of the predictor variables.</p></li>
+<li><p>Tree based Feature Engineered recipe where I removed variables that had only a few levels which had little predictive power.</p></li>
+</ol>
+<p><strong>Evaluation Metric</strong> The metric that was used to compare models was root mean squared error, or RMSE. RMSE measures the average deviation of the predicted values from the actual values in the dataset.</p>
 </section>
 <section id="model-building-and-selection" class="level2">
 <h2 class="anchored" data-anchor-id="model-building-and-selection">Model Building and Selection</h2>
+<p><strong>Evaluation Metric</strong> RMSE will be used to compare the models, which measures the average deviation of the predicted values from the actual values in the dataset.</p>
+<p><strong>Table of Best Performing Model Results</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+
+<table style="width:80%;margin-left:auto;margin-right:auto;">
+<caption><b>RMSE Metrics for Different Models</b></caption>
+ <thead>
+  <tr>
+   <th style="text-align:left;"> Model Type </th>
+   <th style="text-align:right;"> RMSE </th>
+   <th style="text-align:right;"> Standard Error </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> RF FE </td>
+   <td style="text-align:right;"> 0.1254 </td>
+   <td style="text-align:right;"> 0.0022 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> RF KS </td>
+   <td style="text-align:right;"> 0.1270 </td>
+   <td style="text-align:right;"> 0.0022 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BT KS </td>
+   <td style="text-align:right;"> 0.1334 </td>
+   <td style="text-align:right;"> 0.0022 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> BT FE </td>
+   <td style="text-align:right;"> 0.1360 </td>
+   <td style="text-align:right;"> 0.0022 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> KNN KS </td>
+   <td style="text-align:right;"> 0.1472 </td>
+   <td style="text-align:right;"> 0.0019 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EN KS </td>
+   <td style="text-align:right;"> 0.1514 </td>
+   <td style="text-align:right;"> 0.0052 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> KNN FE </td>
+   <td style="text-align:right;"> 0.1582 </td>
+   <td style="text-align:right;"> 0.0018 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Linear KS </td>
+   <td style="text-align:right;"> 0.1608 </td>
+   <td style="text-align:right;"> 0.0070 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> EN FE </td>
+   <td style="text-align:right;"> 0.1853 </td>
+   <td style="text-align:right;"> 0.0022 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Baseline KS </td>
+   <td style="text-align:right;"> 0.2401 </td>
+   <td style="text-align:right;"> 0.0013 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Baseline FE </td>
+   <td style="text-align:right;"> 0.2401 </td>
+   <td style="text-align:right;"> 0.0013 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> Linear FE </td>
+   <td style="text-align:right;"> 3.0393 </td>
+   <td style="text-align:right;"> 0.7796 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<caption><b>Best Parameters for RF Model</b></caption>
+ <thead>
+  <tr>
+   <th style="text-align:right;"> mtry </th>
+   <th style="text-align:right;"> min_n </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:right;"> 7 </td>
+   <td style="text-align:right;"> 2 </td>
+  </tr>
+</tbody>
+</table>
+
+</div>
+</div>
+<p>The best model is the one with the lowest RMSE. Here, it is the random forest model using the tree based featured engineered recipe with mtry = 7 and min_n = 2. This means the best random forest model had 7 data points to split and 2 sampled predictors.</p>
+<p>Review and analysis of tuning parameters should happen here.</p>
+<p>This would be a good section to describe what the best parameters were for each model type.</p>
+<p>Could include a discussion comparing any systematic differences in performance between model types or recipes.</p>
+<p>If variations in recipes were used to explore predictive importance of certain variables, then it should be discussed here.</p>
+<p>The section will likely end with the selection of the final/winning model (provide your reasoning).</p>
+<p>Was it surprising or not surprising that this particular model won? Explain.</p>
 </section>
 <section id="final-model-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="final-model-analysis">Final Model Analysis</h2>
