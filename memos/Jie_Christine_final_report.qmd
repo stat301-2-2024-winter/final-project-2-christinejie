@@ -49,9 +49,12 @@ The data set that I chose consists of over 15,000 home listings, including both 
 ## Data Overview
 ```{r}
 #| echo: false
+#| label: tbl-summary
+#| tbl-cap: Summary of All Variables Using Skim 
 skimr::skim_without_charts(house)
 ```
-There are no variables with any missingness. 
+From @tbl-summary, there are no variables with any missingness issues.
+
 ```{r}
 #| echo: false
 price_not_log
@@ -120,8 +123,12 @@ RMSE will be used to compare the models, which measures the average deviation of
 **Table of Best Performing Model Results**
 ```{r}
 #| echo: false
+#| label: tbl-rmse
+#| tbl-cap: RMSE and Standard Error of Best Performing Models 
 rmse_table
 ```
+From @tbl-rmse, we can see the RMSE and standard error of each model with each recipe. 
+
 The best model is the one with the lowest RMSE. Here, it is the random forest model using the tree based feature engineered recipe. 
 
 The worst model is the one with the highest RMSE. Here, it is the linear model using the standard feature engineered recipe. 
@@ -129,8 +136,12 @@ The worst model is the one with the highest RMSE. Here, it is the linear model u
 **Best Parameters for Each Model**
 ```{r}
 #| echo: false
+#| label: tbl-best-param
+#| tbl-cap: Best Performing Parameters for Each Model
 best_parameters
 ```
+From @tbl-best-param, we can see the best performing parameters for each model.  
+
 For boosted tree, the best model (with lowest RMSE) had the parameters of mtry = 7, min_n = 21, and learn_rate = 0.631. 
 
 For KNN, the best model (with lowest RMSE) had the  parameter of neighbors = 15. 
@@ -140,19 +151,23 @@ For random forest, the best model (with lowest RMSE) had the  parameters of mtry
 For elastic net, the best model (with lowest RMSE) had the  parameters of penalty = 0.178 and mixture = 0. 
 
 **Final Winning Model**
+
 The winning model with the lowest RMSE was the random forest model, fitted to the feature engineered tree based recipe. The best tuning parameters were mtry = 7 and min_n = 2. This means the best random forest model had 7 data points to split and 2 sampled predictors. The lowest RMSE means this model had the lowest average deviation of the predicted values from the actual values in the dataset, which indicates the highest degree of accuracy. 
 
 This was not surprising that this particular model and recipe won, because random forest has usually been the winning model in previous labs, and feature engineered recipes are intended to be more accurate than a kitchen sink recipe. 
 
 ## Final Model Analysis 
+
 After fitting the winning random forest model with feature engineered recipe to the testing data, I obtained the following results. 
 
 **Results of Final Model in Log Base 10**
 ```{r}
 #| echo: false
+#| label: tbl-not-log
+#| tbl-cap: RMSE, RSQ, MAE of Final Model in Log Base 10 
 house_final_metrics_log
 ```
-These are the final results of my best model, in log base 10 transformation. 
+From @tbl-not-log, we can see the RMSE, RSQ, MAE of the final winning model in Log Base 10. 
 
 The RMSE measures the average magnitude of difference between values predicted by a model and the actual values. Here, the RMSE is 0.114 which means the average magnitude of difference between predicted and actual log10(price) is 0.114.
 
@@ -164,9 +179,11 @@ MAE represents the average absolute difference between predicted values and the 
 
 ```{r}
 #| echo: false
+#| label: tbl-log
+#| tbl-cap: RMSE, RSQ, MAE of Final Model in Original Scale
 house_final_metrics_not_log
 ```
-These are the final results of my best model, in their original scale. 
+From @tbl-log, we can see the RMSE, RSQ, MAE of the final winning model in the original scale. 
 
 The RMSE measures the average magnitude of difference between values predicted by a model and the actual values. Here, the RMSE is 226587 which means the average magnitude of difference between predicted and actual price is $226,587. 
 
