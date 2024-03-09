@@ -22,3 +22,7 @@ final_wflow <-
 
 
 final_fit <- fit(final_wflow, house_train)
+
+
+save(final_fit,
+     file="results/final_fit.rda")

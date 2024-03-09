@@ -14,6 +14,7 @@ load(here::here("results/rf_tuned_fe.rda"))
 load(here::here("results/rf_tuned_ks.rda"))
 load(here::here("results/en_tuned_fe.rda"))
 load(here::here("results/en_tuned_ks.rda"))
+load(here::here("results/model_results.rda"))
 library(dplyr)
 library(tidyverse)
 library(rsample)
@@ -24,6 +25,61 @@ tidymodels_prefer()
 library(doMC)
 num_cores <- parallel::detectCores(logical=TRUE)
 registerDoMC(cores=num_cores)
+
+
+# new
+model_results <- as_workflow_set(
+  BT_FE = bt_tuned_fe,
+  BT_KS = bt_tuned_ks,
+  KNN_FE = knn_fit_fe,
+  KNN_KS = knn_fit_ks,
+  linear_FE = lm_fit_fe,
+  linear_KS = lm_fit_ks,
+  rf_FE = rf_tuned_fe,
+  rf_ks = rf_tuned_ks,
+  en_FE = en_tuned_fe,
+  en_KS = en_tuned_ks,
+  baseline_FE = null_fit_fe,
+  baseline_KS = null_fit_ks
+)
+  
+  
+
+rmse_chart <- model_results |>
+  collect_metrics() |>
+  filter(.metric == "rmse") |>
+  slice_min(mean, by = wflow_id) |>
+  arrange(mean) |>
+  select(
+    "Model Type" = wflow_id,
+    "RMSE" = mean,
+    "Std Error" = std_err,
+  )  |> 
+  kbl() |> 
+  kable_styling()
+
+
+library(knitr)
+
+library(knitr)
+
+rmse_chart <- model_results %>%
+  collect_metrics() %>%
+  filter(.metric == "rmse") %>%
+  slice_min(mean, by = wflow_id) %>%
+  arrange(mean) %>%
+  select(
+    `Model Type` = wflow_id,
+    RMSE = mean,
+    `Std Error` = std_err
+  ) %>%
+  kbl(digits = c(0, 3, 4)) %>%  # Set the number of digits for each column
+  kable_styling()
+
+
+
+
+
 
 
 #table 
@@ -107,8 +163,9 @@ rmse_table <- house_metrics %>%
   rename("Model Type" = model) |>
   rename("Number Computations" = n) |>
   arrange(RMSE) |> 
-  select("Model Type", RMSE, "Standard Error") |>
-  knitr::kable(digits = c(NA, 3, 2))
+  select("Model Type", RMSE, "Standard Error") %>%
+  kbl(digits = c(0, 3, 4)) %>%  # Set the number of digits for each column
+  kable_styling()
   
 rmse_table <- house_metrics %>%
   filter(.metric == "rmse") |> 
@@ -139,6 +196,40 @@ best_rf <- rf_tuned_fe |>
 
 library(kableExtra)
 
+### 
+
+
+
+
+bt_best <- bt_tuned_fe |>
+  select_best()
+
+knn_best <- knn_fit_fe |>
+  select_best()
+
+rf_best <- rf_tuned_ks |>
+  select_best()
+
+en_best <- en_tuned_fe |> 
+  select_best()
+
+
+best_parameters <-
+  bind_rows(
+    bt_best |>  mutate (model = "Boosted Tree"),
+    knn_best |>  mutate (model = "KNN"),
+    rf_best |>  mutate (model = "Random Forest"),
+    en_best |>  mutate(model = "Elastic Net")
+  ) |>
+  select(model,
+         mtry,
+         min_n,
+         learn_rate,
+         neighbors,
+         penalty,
+         mixture) %>%
+  kbl(digits = c(NA, 2, 2, 3, 2, 3, 2)) %>%  # Set the number of digits for each column
+  kable_styling()
 
 
 
@@ -148,5 +239,7 @@ rmse_table
 
 save(house_metrics,
      rmse_table,
+     rmse_chart,
      best_rf,
+     best_parameters,
      file="results/model_results.rda")
