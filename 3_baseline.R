@@ -36,12 +36,6 @@ save(null_fit_ks,
      file="results/null_fit_ks.rda")
 
 
-# rmse_null_ks <- null_fit_ks %>% 
-#   collect_metrics() %>% 
-#   filter(.metric == "rmse")
-# 
-# rmse_null_ks
-
 #fe 
 null_workflow_fe <- workflow() %>% 
   add_model(null_spec) %>% 
@@ -56,12 +50,6 @@ null_fit_fe <- null_workflow_fe |>
 save(null_fit_fe,
      file="results/null_fit_fe.rda")
 
-
-# rmse_null_fe <- null_fit_fe %>%
-#   collect_metrics() %>%
-#   filter(.metric == "rmse")
-# 
-# rmse_null_fe
 
 
 

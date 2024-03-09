@@ -179,19 +179,19 @@ MAE represents the average absolute difference between predicted values and the 
 #| echo: false
 knitr::include_graphics("/Users/christinejie/Desktop/stat301-2/final-project-2-christinejie/plots/plot_1.png")
 ```
-This graph shows the relationship between predicted and actual price, for houses of all prices. For the most part, predicted price and actual price are pretty similar, as visualized by this graph. 
+This graph shows the relationship between predicted and actual price, for houses of all prices. For the most part, predicted price and actual price are pretty similar, as visualized by this graph. This means the model did a decent job at predicting house prices, overall. 
 
 ```{r}
 #| echo: false
 knitr::include_graphics("/Users/christinejie/Desktop/stat301-2/final-project-2-christinejie/plots/plot_2.png")
 ```
-This graph shows the relationship between predicted and actual price, for houses less than $1.25M. Most of the data points are on the line of best fit. This means the model did a decent job at predicting price, especially for properties that were less than around $1,250,000. 
+This graph shows the relationship between predicted and actual price, for houses less than $1.25M. Most of the data points are on the line of best fit. This means the model did a good job at predicting price, especially for properties that were less than around $1,250,000. 
 
 ```{r}
 #| echo: false
 knitr::include_graphics("/Users/christinejie/Desktop/stat301-2/final-project-2-christinejie/plots/plot_3.png")
 ```
-This graph shows the relationship between predicted and actual price, for houses more than $1.25M. Many of the data points are not on the line of best fit. This means the model was less accurate at predicting houses with higher prices. There are a few very high outliers of actual price that are very far from the line of best fit, which can be seen on the far right side of the graph. For these high priced homes, the model's predicted price was far lower than the actual price. 
+This graph shows the relationship between predicted and actual price, for houses more than $1.25M. Many of the data points are not on the line of best fit. This means the model was less accurate at predicting houses with higher prices. There are a few very high outliers of actual price that are very far from the line of best fit, which can be seen on the far right side of the graph.
 
 ## Conclusion 
 **Assessing and Interpreting Accuracy of Winning Model**

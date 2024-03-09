@@ -33,14 +33,6 @@ prep_rec_lin_ks
 
 
 #feature engineered standard 
-#remove property tax bc it's the same for everything, remove long and lat 
-
-lin_ks <- recipe(price_log10 ~ ., data = house_train) |>
-  step_rm(latest_price) |> 
-  step_dummy(all_nominal_predictors()) |>
-  step_zv(all_predictors()) |> 
-  step_normalize()
-
 
 lin_fe <- recipe(price_log10 ~ ., data = house_train) |>
   step_rm(latest_price,
@@ -60,19 +52,6 @@ lin_fe <- recipe(price_log10 ~ ., data = house_train) |>
 prep_rec_lin_fe<- prep(linear_fe) |> 
   bake(new_data = NULL) 
 
-naniar::miss_var_summary(prep_rec_lin_fe) |> 
-  filter(n_miss > 0)
-
-# impute median for continuous variables 
-
-# Trees automatically detect non-linear relationships 
-# so we don’t need the natural spline step (it has been removed). 
-# Some of the other steps are not needed 
-# (such as Log-transforms, centering, scaling), 
-# but can be done since they will not meaningfully change anything. 
-# The natural spline step performs a basis expansion, 
-# which turns one column into 5 — 
-# which is what causes the issue for the random forest algorithm.
 
 # kitchen sink tree 
 tree_ks <- recipe(price_log10 ~ ., data = house_train) |>

@@ -12,6 +12,7 @@ set.seed(123)
 # handle common conflicts
 tidymodels_prefer()
 
+#loading in data and cleaning
 house <- read_csv("data/austinHousingData.csv") |>
   janitor::clean_names() |>
   mutate(
@@ -54,6 +55,7 @@ house_test <- testing(house_split)
 save(house, house_train, house_test, file = "initial_processing/house_split.rda")
 
 load(here::here("initial_processing/house_split.rda"))
+
 ## folds
 house_folds <- vfold_cv(house_train,
                         v = 10,
@@ -62,9 +64,11 @@ house_folds <- vfold_cv(house_train,
 
 save(house_folds,
      file = "results/house_folds.rda")
-# 
+
+# summary of all variables 
 summary <-skimr::skim_without_charts(house_train)
 
+# price with no transformations
 price_not_log <- house_train |> 
   ggplot(aes(x=latest_price)) + 
   geom_histogram(bins=50) 
@@ -82,62 +86,7 @@ save(summary,
      file=here::here("initial_processing/price"))
 
 
-#step log bedrooms 
-house_train |> 
-  ggplot(aes(x=log(num_of_bedrooms))) + 
-  geom_histogram(bins=8) 
-
-house_train |> 
-  ggplot(aes(x=num_of_bedrooms)) + 
-  geom_histogram(bins=8) 
-
-
-#step log sq ft 
-house_train |> 
-  ggplot(aes(x=living_area_sq_ft)) + 
-  geom_histogram(bins=20) 
-
-house_train |> 
-  ggplot(aes(x=log(living_area_sq_ft))) + 
-  geom_histogram(bins=20) 
-
-#step log lot_size_sq_ft
-
-house_train |> 
-  ggplot(aes(x=lot_size_sq_ft)) + 
-  geom_histogram(bins=30) 
-
-house_train |> 
-  ggplot(aes(x=log(lot_size_sq_ft))) + 
-  geom_histogram(bins=30) 
-
-
-# yr built 
-
-house_train |> 
-  ggplot(aes(x=year_built)) + 
-  geom_histogram(bins=30) 
-
-house_train |> 
-  ggplot(aes(x=log(year_built))) + 
-  geom_histogram(bins=30) 
-
-house_train |> 
-  ggplot(aes(x=log(latest_price),y=log(year_built))) +
-  geom_jitter()
-
-#schools
-house_train |> 
-  ggplot(aes(x=(num_of_primary_schools),y=(num_of_elementary_schools))) +
-  geom_jitter()
-
-
 #step interact 
-house_train |> 
-  ggplot(aes(x=median_students_per_teacher,y=avg_school_rating)) +
-  geom_jitter()
-
-
 house_train |>
   ggplot(aes(x = num_of_bathrooms, y = num_of_bedrooms)) +
   geom_point() +
@@ -148,8 +97,7 @@ house_train |>
 ggsave("plots/plot_5.png")
 
 
-
-
+## corr plot
 corr<-house_train |> 
   select(where(is.numeric)) |> 
   cor()
@@ -157,4 +105,4 @@ corr<-house_train |>
 ggcorrplot::ggcorrplot(corr)
 ggsave("plots/plot_4.png")
 
-skimr::skim(house_train)
+
