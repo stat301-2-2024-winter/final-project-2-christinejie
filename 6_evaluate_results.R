@@ -42,17 +42,44 @@ house_final_metrics_log <-
   kable_styling()
 
 ## graph of predicted vs actual 
-ggplot(house_predict_rf_log, aes(x = price_log10, y = .pred)) +
+ggplot(house_predict_rf_not_log, aes(x = price, y = .pred)) +
   geom_jitter(alpha = 0.5) +
-  geom_abline() +
-  coord_obs_pred()
+  geom_abline(lty = 2) +
+  labs(y = "Predicted Price", x = "Actual Price",
+       title = "Predicted Price vs Actual Price") +
+  scale_x_continuous(labels = function(x) paste0("$", scales::comma(x))) +
+  scale_y_continuous(labels = function(y) paste0("$", scales::comma(y))) +
+  theme(plot.title = element_text(size = 24, face = "bold"))
+ggsave("plots/plot_1.png")
+
 
 ggplot(house_predict_rf_not_log, aes(x = price, y = .pred)) +
   geom_jitter(alpha = 0.5) +
   geom_abline(lty = 2) +
-  coord_obs_pred() +
   labs(y = "Predicted Price", x = "Actual Price",
-       title = "Predicted Price vs Actual Price")
+       title = "Predicted Price vs Actual Price, \nfor Prices Less than $1.25M") +
+  coord_cartesian(xlim = c(NA, 1250000))  +
+  scale_x_continuous(labels = function(x) paste0("$", scales::comma(x))) +
+  scale_y_continuous(labels = function(y) paste0("$", scales::comma(y))) +
+  theme(plot.title = element_text(size = 24, face = "bold"))
+ggsave("plots/plot_2.png")
+
+ggplot(house_predict_rf_not_log, aes(x = price, y = .pred)) +
+  geom_jitter(alpha = 0.5) +
+  geom_abline(lty = 2) +
+  labs(y = "Predicted Price", x = "Actual Price",
+       title = "Predicted Price vs Actual Price, \nfor Prices Greater than $1.25M") +
+  coord_cartesian(xlim = c(1250000, NA))  +
+  scale_x_continuous(labels = function(x) paste0("$", scales::comma(x))) +
+  scale_y_continuous(labels = function(y) paste0("$", scales::comma(y))) +
+  theme(plot.title = element_text(size = 24, face = "bold"))  # Change font size to 16
+ggsave("plots/plot_3.png")
+
+
+
+
+
+
 
 
 save(house_metrics_final,
@@ -63,4 +90,4 @@ save(house_metrics_final,
      file="results/final_results.rda")
 
 
-ggsave("plots/plot_1.png")
+

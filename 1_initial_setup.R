@@ -138,15 +138,23 @@ house_train |>
   geom_jitter()
 
 
-house_train |> 
-  ggplot(aes(x=num_of_bathrooms,y=num_of_bedrooms)) +
-  geom_jitter()
+house_train |>
+  ggplot(aes(x = num_of_bathrooms, y = num_of_bedrooms)) +
+  geom_point() +
+  geom_abline(lty = 2) +
+  labs(x = "Number of Bathrooms", y = "Number of Bedrooms", 
+       title = "Number of Bedrooms vs Number of Bathrooms") + 
+  theme(plot.title = element_text(size = 24, face = "bold")) 
+ggsave("plots/plot_5.png")
+
+
+
 
 corr<-house_train |> 
   select(where(is.numeric)) |> 
   cor()
 
 ggcorrplot::ggcorrplot(corr)
-
+ggsave("plots/plot_4.png")
 
 skimr::skim(house_train)
