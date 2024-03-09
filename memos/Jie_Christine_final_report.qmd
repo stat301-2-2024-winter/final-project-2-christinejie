@@ -122,7 +122,9 @@ RMSE will be used to compare the models, which measures the average deviation of
 #| echo: false
 rmse_table
 ```
-The best model is the one with the lowest RMSE. Here, it is the random forest model using the tree based featured engineered recipe. 
+The best model is the one with the lowest RMSE. Here, it is the random forest model using the tree based feature engineered recipe. 
+
+The worst model is the one with the highest RMSE. Here, it is the linear model using the standard feature engineered recipe. 
 
 **Best Parameters for Each Model**
 ```{r}
@@ -194,6 +196,7 @@ This graph shows the relationship between predicted and actual price, for houses
 
 ## Conclusion 
 **Assessing and Interpreting Accuracy of Winning Model**
+
 Although my winning model was the best out of all of the models I built and compared, the winning RMSE was still large. 
 
 The winning model, when evaluated in its original scale, had a RMSE of 226587, which means the average magnitude of difference between predicted and actual price is $226,587. This was in part due to many of the high priced homes, which the winning model was less accurate at predicting than lower priced homes. 
@@ -203,6 +206,7 @@ I believe this is a large average magnitude of difference between predicted and 
 However, as stated above, the model was more accurate for lower priced homes than higher priced homes. 
 
 **Next Steps**
+
 To improve the performance of my model, I would create two separate models: one for predicting lower priced houses, and one for predicting higher priced houses.  
 
 I hypothesize higher priced houses are luxury houses with higher quality features that are not captured well by any of the existing predictor variables. For example, better finishes, fixtures, and the overall quality of the house are not represented in my current data set.  
@@ -210,13 +214,16 @@ I hypothesize higher priced houses are luxury houses with higher quality feature
 I believe my hypothesis makes sense. With a quick look at Zillow listings, I can immediately see that houses with luxury features such as heated floors and granite countertops typically command a higher price per square feet and higher price per number of bedrooms, among other factors. 
 
 **Overall Conclusion**
+
 The model that was best performing at predicting the prices of homes in Austin, TX was the random forest model with 7 data points to split (mtry=7) and 2 sampled predictors (min_n=2), using the feature engineered recipe. This model had the lowest RMSE value of any model and recipe. 
 
 ## References 
+
 Pierce, E. (2021). Austin, TX House Listings. Kaggle.com. https://www.kaggle.com/datasets/ericpierce/austinhousingprices
 
 ## Appendix: EDA
 **Correlation Plot for All Numeric Variables**
+
 ```{r}
 #| echo: false
 knitr::include_graphics("/Users/christinejie/Desktop/stat301-2/final-project-2-christinejie/plots/plot_4.png")
@@ -224,9 +231,11 @@ knitr::include_graphics("/Users/christinejie/Desktop/stat301-2/final-project-2-c
 This plot shows the correlation between all numeric variables. In my recipe, I decided to remove `year_built` (year built), `num_price_changes` (number of price changes), `num_of_accessibility_features` (number of accessibility features), `num_of_community_features` (number of community features). This is because these variables had close to zero correlation with the outcome variable of interest, `price_log10` (price transformed in log10). 
 
 **Removal of Categorical Variables**
+
 I also removed the categorical variables `city` (city), `zipcode` (zipcode), and `home_type`(home type) because these variables had 9, 48, and 10 unique values respectively. These variables had little predictive power because there were not enough unique values, so I removed them. See Data Overview section above. 
 
 **Interaction Terms**
+
 ```{r}
 #| echo: false
 knitr::include_graphics("/Users/christinejie/Desktop/stat301-2/final-project-2-christinejie/plots/plot_5.png")

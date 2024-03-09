@@ -3291,7 +3291,8 @@ Github Repo Link
 
 </div>
 </div>
-<p>The best model is the one with the lowest RMSE. Here, it is the random forest model using the tree based featured engineered recipe.</p>
+<p>The best model is the one with the lowest RMSE. Here, it is the random forest model using the tree based feature engineered recipe.</p>
+<p>The worst model is the one with the highest RMSE. Here, it is the linear model using the standard feature engineered recipe.</p>
 <p><strong>Best Parameters for Each Model</strong></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -3456,14 +3457,17 @@ Github Repo Link
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p><strong>Assessing and Interpreting Accuracy of Winning Model</strong> Although my winning model was the best out of all of the models I built and compared, the winning RMSE was still large.</p>
+<p><strong>Assessing and Interpreting Accuracy of Winning Model</strong></p>
+<p>Although my winning model was the best out of all of the models I built and compared, the winning RMSE was still large.</p>
 <p>The winning model, when evaluated in its original scale, had a RMSE of 226587, which means the average magnitude of difference between predicted and actual price is $226,587. This was in part due to many of the high priced homes, which the winning model was less accurate at predicting than lower priced homes.</p>
 <p>I believe this is a large average magnitude of difference between predicted and actual prices. If I were a real estate agent or homebuyer using this model to evaluate house prices, an average $200,000+ discrepancy is a big deal.</p>
 <p>However, as stated above, the model was more accurate for lower priced homes than higher priced homes.</p>
-<p><strong>Next Steps</strong> To improve the performance of my model, I would create two separate models: one for predicting lower priced houses, and one for predicting higher priced houses.</p>
+<p><strong>Next Steps</strong></p>
+<p>To improve the performance of my model, I would create two separate models: one for predicting lower priced houses, and one for predicting higher priced houses.</p>
 <p>I hypothesize higher priced houses are luxury houses with higher quality features that are not captured well by any of the existing predictor variables. For example, better finishes, fixtures, and the overall quality of the house are not represented in my current data set.</p>
 <p>I believe my hypothesis makes sense. With a quick look at Zillow listings, I can immediately see that houses with luxury features such as heated floors and granite countertops typically command a higher price per square feet and higher price per number of bedrooms, among other factors.</p>
-<p><strong>Overall Conclusion</strong> The model that was best performing at predicting the prices of homes in Austin, TX was the random forest model with 7 data points to split (mtry=7) and 2 sampled predictors (min_n=2), using the feature engineered recipe. This model had the lowest RMSE value of any model and recipe.</p>
+<p><strong>Overall Conclusion</strong></p>
+<p>The model that was best performing at predicting the prices of homes in Austin, TX was the random forest model with 7 data points to split (mtry=7) and 2 sampled predictors (min_n=2), using the feature engineered recipe. This model had the lowest RMSE value of any model and recipe.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -3478,7 +3482,8 @@ Github Repo Link
 </div>
 </div>
 <p>This plot shows the correlation between all numeric variables. In my recipe, I decided to remove <code>year_built</code> (year built), <code>num_price_changes</code> (number of price changes), <code>num_of_accessibility_features</code> (number of accessibility features), <code>num_of_community_features</code> (number of community features). This is because these variables had close to zero correlation with the outcome variable of interest, <code>price_log10</code> (price transformed in log10).</p>
-<p><strong>Removal of Categorical Variables</strong> I also removed the categorical variables <code>city</code> (city), <code>zipcode</code> (zipcode), and <code>home_type</code>(home type) because these variables had 9, 48, and 10 unique values respectively. These variables had little predictive power because there were not enough unique values, so I removed them. See Data Overview section above.</p>
+<p><strong>Removal of Categorical Variables</strong></p>
+<p>I also removed the categorical variables <code>city</code> (city), <code>zipcode</code> (zipcode), and <code>home_type</code>(home type) because these variables had 9, 48, and 10 unique values respectively. These variables had little predictive power because there were not enough unique values, so I removed them. See Data Overview section above.</p>
 <p><strong>Interaction Terms</strong></p>
 <div class="cell">
 <div class="cell-output-display">
