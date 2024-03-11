@@ -3217,7 +3217,8 @@ Github Repo Link
 <li><p>Simple Linear (lm): the linear model describes the relationship between a dependent variable and independent variables with a straight line, determined by a slope and y-intercept, often estimated using the method of least squares.</p></li>
 <li><p>Random Forest (rf): the random forest model creates many decision trees which are built on a random sample of the data, and features that are randomly chosen.Then, for predictions, it combines the results of all the trees, either by averaging them for numerical data or by picking the most popular choice for categorical data</p></li>
 </ol>
-<p><strong>Tuning Parameters</strong> For the Boosted Tree model, I tuned the mtry, min_n and learn_rate parameters. Mtry is the number of sampled predictors, min_n is the number of data points to split, and learn_rate is weight for the influence of each new tree.</p>
+<p><strong>Tuning Parameters</strong> Tuning a model adjusts its parameters to optimize its performance on a given dataset. This involves experimenting with different parameter values to find the combination that results in the lowest RMSE.</p>
+<p>For the Boosted Tree model, I tuned the mtry, min_n and learn_rate parameters. Mtry is the number of sampled predictors, min_n is the number of data points to split, and learn_rate is weight for the influence of each new tree.</p>
 <p>For the Elastic Net model, I tuned the penalty and mixture parameters. Penalty is a term added during training to discourage overfitting. Mixture controls whether the elastic model is more like a ridge model (mixture = 0) or more like a lasso model (mixture = 1).</p>
 <p>For the Random Forest model, I tuned the min_n and mtry parameters. min_n is the number of data points to split and mtry is the number of sampled predictors.</p>
 <p>For the K-Nearest Neighbors model, I tuned the neighbors parameter. neighbors is the number of nearest neighbors used when making predictions.</p>
