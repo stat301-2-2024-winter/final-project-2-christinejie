@@ -44,7 +44,7 @@ I wish to predict the sales price of houses in Austin, Texas using the models we
 
 My motivation for creating this model is because I truly enjoy browsing real estate websites in my free time. I have always been curious about the factors that influence the price of a home, including whether it has parking, number of bedrooms, square footage, and quality of local schools. As an economics major, I'm also aware that housing prices are a large reflection of the local economy. 
 
-The data set that I chose consists of over 15,000 home listings, including both categorical and numerical variables. 
+The data set that I chose consists of over 15,000 home listings, with 42 variables including both categorical and numerical variables. 
 
 ## Data Overview
 ```{r}
@@ -53,7 +53,7 @@ The data set that I chose consists of over 15,000 home listings, including both 
 #| tbl-cap: Summary of All Variables Using Skim 
 skimr::skim_without_charts(house)
 ```
-From @tbl-summary, there are no variables with any missingness issues.
+From @tbl-summary, there are no variables with any missingness issues. The variables `city`, `has_cooling` (has cooling), `has_heating` (has heating), `has_spa` (has spa) have class imbalance issues, which I addressed by removing them from my recipe. 
 
 ```{r}
 #| echo: false
@@ -75,24 +75,24 @@ This is a regression and prediction problem because we are predicting house pric
 **Data Splitting**
 I used 75% of the data for training the models and the remaining 25% for testing the models. 
 
-**Model Types**
+**Model Types**: I used the following recipes: 
 
-1) Baseline 
+1) Baseline: This is my most basic model. 
 
-2) Boosted Tree (bt)
+2) Boosted Tree (bt): Boosted Trees work by putting together a bunch of decision trees, where each new tree is trained to correct the mistakes of the previous ones. Then, all these trees are added together to make the final prediction, with each tree's contribution adjusted based on how much it helps improve the overall prediction.
 
-3) Elastic Net (en)
+3) Elastic Net (en): The Elastic Net model combines two types of penalties (Lasso and Ridge) to perform linear regression, using both feature selection (picking out the most important information from a bunch of data to make predictions) and coefficient shrinkage (preventing the model from overreacting to noisy data) for better prediction accuracy. 
 
-4) K - Nearest Neighbors (knn)
+4) K - Nearest Neighbors (knn): The knn model selects a number of features for prediction, calculates the Euclidean distance between the new data point and each training point, and then finds the average value of the "K" closest data points for prediction.
 
-5) Simple Linear (lm)
+5) Simple Linear (lm): the linear model describes the relationship between a dependent variable and independent variables with a straight line, determined by a slope and y-intercept, often estimated using the method of least squares.
 
-6) Random Forest (rf)
+6) Random Forest (rf): the random forest model creates many  decision trees which are built on a random sample of the data, and features that are randomly chosen.Then, for predictions, it combines the results of all the trees, either by averaging them for numerical data or by picking the most popular choice for categorical data 
 
 **Tuning Parameters**
 For the Boosted Tree model, I tuned the mtry, min_n and learn_rate parameters. Mtry is the number of sampled predictors, min_n is the number of data points to split, and learn_rate is weight for the influence of each new tree. 
 
-For the Elastic Net model, I tuned the penalty and mixture parameters. Penalty is a term added during training to discourage or overfitting. Mixture controls whether the elastic model is more like a ridge model (mixture = 0) or more like a lasso model (mixture = 1). 
+For the Elastic Net model, I tuned the penalty and mixture parameters. Penalty is a term added during training to discourage overfitting. Mixture controls whether the elastic model is more like a ridge model (mixture = 0) or more like a lasso model (mixture = 1). 
 
 For the Random Forest model, I tuned the min_n and mtry parameters. min_n is the number of data points to split and mtry is the number of sampled predictors. 
 
@@ -104,13 +104,13 @@ Resampling is when you choose random samples from the initial training dataset w
 
 **Recipe Buiding** I built 4 recipes. 
 
-1) Standard baseline/kitchen sink recipe where I used all of the predictor variables. 
+1) Standard kitchen sink recipe where I used all of the predictor variables. 
 
-2) Standard Feature Engineered recipe where I removed variables that had only a few levels which had little predictive power. I also interacted the variables for number of bathrooms and number of bedrooms to account for dependencies between these variables. (See appendix for EDA)
+2) Standard Feature Engineered recipe where I removed variables that had only a few levels which had little predictive power or severe class imbalance issues. I also interacted the variables for number of bathrooms and number of bedrooms to account for dependencies between these variables. (See appendix for EDA)
 
-3) Tree based baseline recipe where I used all of the predictor variables. 
+3) Tree based kitchen sink recipe where I used all of the predictor variables. 
 
-4) Tree based Feature Engineered recipe where I removed variables that had only a few levels which had little predictive power. 
+4) Tree based Feature Engineered recipe where I removed variables that had only a few levels which had little predictive power or severe class imbalance issues. 
 
 **Evaluation Metric**
 The metric that was used to compare models was root mean squared error, or RMSE. RMSE measures the average deviation of the predicted values from the actual values in the dataset.
@@ -169,7 +169,7 @@ house_final_metrics_log
 ```
 From @tbl-not-log, we can see the RMSE, RSQ, MAE of the final winning model in Log Base 10. 
 
-The RMSE measures the average magnitude of difference between values predicted by a model and the actual values. Here, the RMSE is 0.114 which means the average magnitude of difference between predicted and actual log10(price) is 0.114.
+The RMSE measures the average magnitude of difference between values predicted by a model and the actual values. Here, the RMSE is 0.114 which means the average magnitude of difference between predicted and actual log10(price) is 0.114. This is much lower and better than the baseline model, which had a RMSE of 0.240. This means that building a predictive model did pay off. 
 
 RSQ represents the proportion of the variation in the dependent variable that is explained by the independent variables. Here the RSQ is 0.759 so 75.9% of the variation in log10(price) was explained by the predictor variables.
 
@@ -209,7 +209,7 @@ This graph shows the relationship between predicted and actual price, for houses
 #| echo: false
 knitr::include_graphics("/Users/christinejie/Desktop/stat301-2/final-project-2-christinejie/plots/plot_3.png")
 ```
-This graph shows the relationship between predicted and actual price, for houses more than $1.25M. Many of the data points are not on the line of best fit. This means the model was less accurate at predicting houses with higher prices. There are a few very high outliers of actual price that are very far from the line of best fit, which can be seen on the far right side of the graph.
+This graph shows the relationship between predicted and actual price, for houses more than $1.25M. Many of the data points are not on the line of best fit. This means the model was less accurate at predicting houses with higher prices. There are a few very high outliers of actual price ($5M+) that are very far from the line of best fit, which can be seen on the far right side of the graph.
 
 ## Conclusion 
 **Assessing and Interpreting Accuracy of Winning Model**

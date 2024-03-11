@@ -42,7 +42,10 @@ lin_fe <- recipe(price_log10 ~ ., data = house_train) |>
           num_of_community_features,
           city,
           zipcode,
-          home_type) |> 
+          home_type,
+          has_cooling,
+          has_heating,
+          has_spa) |> 
   step_interact(terms = ~ num_of_bathrooms:num_of_bedrooms) |> 
   step_dummy(all_nominal_predictors()) |>
   step_zv(all_predictors()) |> 
@@ -66,12 +69,17 @@ prep_rec_tree_ks
 
 #featured engineering tree 
 tree_fe <- recipe(price_log10 ~ ., data = house_train) |>
-  #impute here too 
   step_rm(latest_price,
           year_built,
           num_price_changes,
           num_of_accessibility_features,
-          num_of_community_features) |> 
+          num_of_community_features,
+          city,
+          zipcode,
+          home_type,
+          has_cooling,
+          has_heating,
+          has_spa) |> 
   step_dummy(all_nominal_predictors(), one_hot = TRUE) |>
   step_nzv(all_predictors()) 
 

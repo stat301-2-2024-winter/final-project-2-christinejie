@@ -29,6 +29,7 @@ house_predict_rf_not_log <- house_test |>
 
 house_final_metrics_not_log <-
   house_metrics_final(house_predict_rf_not_log, price, .pred) %>%
+  select(.metric, .estimate) |>
   kbl(digits = 3) %>%  # Set the number of digits for each column
   kable_styling()
 
@@ -38,6 +39,7 @@ house_predict_rf_log <- house_test |>
 
 house_final_metrics_log <-
   house_metrics_final(house_predict_rf_log, price_log10, .pred) %>%
+  select(.metric, .estimate) |>
   kbl(digits = 3) %>%  # Set the number of digits for each column
   kable_styling()
 
