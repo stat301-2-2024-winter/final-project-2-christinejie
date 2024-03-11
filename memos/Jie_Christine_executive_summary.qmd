@@ -1,0 +1,136 @@
+---
+title: "Austin, TX: Housing Prices: Executive Summary"
+subtitle: "Data Science 2 with R (STAT 301-2)"
+author: "Christine Jie"
+date: today
+
+format:
+  html:
+    toc: true
+    toc-depth: 4
+    embed-resources: true
+    code-fold: show
+    link-external-newwindow: true
+    
+execute:
+  warning: false
+  
+from: markdown+emoji
+
+reference-location: margin
+citation-location: margin
+---
+
+::: {.callout-tip icon="false"}
+## Github Repo Link
+
+[https://github.com/stat301-2-2024-winter/final-project-2-christinejie](https://github.com/stat301-2-2024-winter/final-project-2-christinejie)
+:::
+
+```{r}
+#| echo: false
+load(here::here("initial_processing/price"))
+load(here::here("initial_processing/house_split.rda"))
+load(here::here("results/model_results.rda"))
+load(here::here("results/final_results.rda"))
+
+```
+
+
+
+
+## Introduction 
+I wish to predict the sales price of houses in Austin, Texas using characteristics of the house including number of bedrooms, square feet, and whether the house has a garage. 
+
+I used a data set from Kaggle called [Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices). The data set that I chose consists of over 15,000 home listings, with 42 variables including both categorical and numerical variables. 
+
+## Methods
+
+**Overview**
+This is a regression and prediction problem because we are predicting house prices using a variety of variables. 
+
+**Model Types**: I used the following 6 models: 
+
+1) Baseline
+
+2) Boosted Tree (bt)
+
+3) Elastic Net (en)
+
+4) K - Nearest Neighbors (knn)
+
+5) Simple Linear (lm)
+
+6) Random Forest (rf)
+
+**Recipe Buiding** I built 4 recipes. 
+
+1) Standard kitchen sink recipe 
+
+2) Standard Feature Engineered recipe 
+
+3) Tree based kitchen sink recipe 
+
+4) Tree based Feature Engineered recipe 
+
+
+## Model Building and Selection 
+
+**Evaluation Metric**
+RMSE will be used to compare the models, which measures the average deviation of the predicted values from the actual values in the dataset. A lower RMSE means greater accuracy. 
+
+**Table of Best Performing Model Results**
+```{r}
+#| echo: false
+#| label: tbl-rmse
+#| tbl-cap: RMSE and Standard Error of Best Performing Models 
+rmse_table
+```
+From @tbl-rmse, we can see the RMSE and standard error of each model with each recipe. 
+
+The best model is the one with the lowest RMSE. Here, it is the random forest model using the tree based feature engineered recipe. 
+
+The worst model is the one with the highest RMSE. Here, it is the linear model using the standard feature engineered recipe. 
+
+
+**Final Winning Model**
+
+The winning model with the lowest RMSE was the random forest model, fitted to the feature engineered tree based recipe. The best tuning parameters were mtry = 7 and min_n = 2. This means the best random forest model had 7 data points to split and 2 sampled predictors. The lowest RMSE means this model had the lowest average deviation of the predicted values from the actual values in the dataset, which indicates the highest degree of accuracy. 
+
+## Final Model Analysis 
+
+After fitting the winning random forest model with feature engineered recipe to the testing data, I obtained the following results. 
+
+**Results of Final Model in Original Scale**
+
+```{r}
+#| echo: false
+#| label: tbl-log
+#| tbl-cap: RMSE, RSQ, MAE of Final Model in Original Scale
+house_final_metrics_not_log
+```
+From @tbl-log, we can see the RMSE, RSQ, MAE of the final winning model in the original scale. 
+
+The RMSE measures the average magnitude of difference between values predicted by a model and the actual values. Here, the RMSE is 226587 which means the average magnitude of difference between predicted and actual price is $226,587. 
+
+RSQ represents the proportion of the variation in the dependent variable that is explained by the independent variables. Here the RSQ is 0.725 so 72.5% of the variation in price was explained by the predictor variables.
+
+MAE represents the average absolute difference between predicted values and the actual values. Here, the MAE is 91211 which means on average there is a $91,211 difference in predicted versus actual price. 
+
+**Graphs of Predicted Prices vs Actual Prices**
+
+```{r}
+#| echo: false
+knitr::include_graphics("/Users/christinejie/Desktop/stat301-2/final-project-2-christinejie/plots/plot_1.png")
+```
+This graph shows the relationship between predicted and actual price, for houses of all prices. For the most part, predicted price and actual price are pretty similar, as visualized by this graph. This means the model did a decent job at predicting house prices, overall. 
+
+
+## Conclusion 
+
+The model that was best performing at predicting the prices of homes in Austin, TX was the random forest model with 7 data points to split (mtry=7) and 2 sampled predictors (min_n=2), using the feature engineered recipe. This model had the lowest RMSE value of any model and recipe. 
+
+## References 
+
+Pierce, E. (2021). Austin, TX House Listings. Kaggle.com. https://www.kaggle.com/datasets/ericpierce/austinhousingprices
+

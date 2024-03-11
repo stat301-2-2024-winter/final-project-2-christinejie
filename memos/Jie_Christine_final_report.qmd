@@ -40,11 +40,11 @@ load(here::here("results/final_results.rda"))
 
 
 ## Introduction 
-I wish to predict the sales price of houses in Austin, Texas using the models we learned this quarter. I used a data set from Kaggle called [Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices). 
+I wish to predict the sales price of houses in Austin, Texas using characteristics of the house including number of bedrooms, square feet, and whether the house has a garage. 
 
 My motivation for creating this model is because I truly enjoy browsing real estate websites in my free time. I have always been curious about the factors that influence the price of a home, including whether it has parking, number of bedrooms, square footage, and quality of local schools. As an economics major, I'm also aware that housing prices are a large reflection of the local economy. 
 
-The data set that I chose consists of over 15,000 home listings, with 42 variables including both categorical and numerical variables. 
+I used a data set from Kaggle called [Austin, TX House Listings](https://www.kaggle.com/datasets/ericpierce/austinhousingprices). The data set that I chose consists of over 15,000 home listings, with 42 variables including both categorical and numerical variables. 
 
 ## Data Overview
 ```{r}
@@ -75,7 +75,7 @@ This is a regression and prediction problem because we are predicting house pric
 **Data Splitting**
 I used 75% of the data for training the models and the remaining 25% for testing the models. 
 
-**Model Types**: I used the following recipes: 
+**Model Types**: I used the 6 following models: 
 
 1) Baseline: This is my most basic model. 
 
@@ -118,7 +118,7 @@ The metric that was used to compare models was root mean squared error, or RMSE.
 ## Model Building and Selection 
 
 **Evaluation Metric**
-RMSE will be used to compare the models, which measures the average deviation of the predicted values from the actual values in the dataset. 
+RMSE will be used to compare the models, which measures the average deviation of the predicted values from the actual values in the dataset. A lower RMSE means greater accuracy. 
 
 **Table of Best Performing Model Results**
 ```{r}

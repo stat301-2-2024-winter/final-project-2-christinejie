@@ -2596,9 +2596,9 @@ Github Repo Link
 </div>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>I wish to predict the sales price of houses in Austin, Texas using the models we learned this quarter. I used a data set from Kaggle called <a href="https://www.kaggle.com/datasets/ericpierce/austinhousingprices">Austin, TX House Listings</a>.</p>
+<p>I wish to predict the sales price of houses in Austin, Texas using characteristics of the house including number of bedrooms, square feet, and whether the house has a garage.</p>
 <p>My motivation for creating this model is because I truly enjoy browsing real estate websites in my free time. I have always been curious about the factors that influence the price of a home, including whether it has parking, number of bedrooms, square footage, and quality of local schools. As an economics major, I’m also aware that housing prices are a large reflection of the local economy.</p>
-<p>The data set that I chose consists of over 15,000 home listings, with 42 variables including both categorical and numerical variables.</p>
+<p>I used a data set from Kaggle called <a href="https://www.kaggle.com/datasets/ericpierce/austinhousingprices">Austin, TX House Listings</a>. The data set that I chose consists of over 15,000 home listings, with 42 variables including both categorical and numerical variables.</p>
 </section>
 <section id="data-overview" class="level2">
 <h2 class="anchored" data-anchor-id="data-overview">Data Overview</h2>
@@ -3208,7 +3208,7 @@ Github Repo Link
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
 <p><strong>Overview</strong> This is a regression and prediction problem because we are predicting house prices using a variety of variables.</p>
 <p><strong>Data Splitting</strong> I used 75% of the data for training the models and the remaining 25% for testing the models.</p>
-<p><strong>Model Types</strong>: I used the following recipes:</p>
+<p><strong>Model Types</strong>: I used the 6 following models:</p>
 <ol type="1">
 <li><p>Baseline: This is my most basic model.</p></li>
 <li><p>Boosted Tree (bt): Boosted Trees work by putting together a bunch of decision trees, where each new tree is trained to correct the mistakes of the previous ones. Then, all these trees are added together to make the final prediction, with each tree’s contribution adjusted based on how much it helps improve the overall prediction.</p></li>
@@ -3233,7 +3233,7 @@ Github Repo Link
 </section>
 <section id="model-building-and-selection" class="level2">
 <h2 class="anchored" data-anchor-id="model-building-and-selection">Model Building and Selection</h2>
-<p><strong>Evaluation Metric</strong> RMSE will be used to compare the models, which measures the average deviation of the predicted values from the actual values in the dataset.</p>
+<p><strong>Evaluation Metric</strong> RMSE will be used to compare the models, which measures the average deviation of the predicted values from the actual values in the dataset. A lower RMSE means greater accuracy.</p>
 <p><strong>Table of Best Performing Model Results</strong></p>
 <div class="cell">
 <div class="cell-output-display">
