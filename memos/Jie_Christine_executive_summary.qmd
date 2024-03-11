@@ -134,5 +134,5 @@ The model that was best performing at predicting the prices of homes in Austin, 
 
 ## References 
 
-Pierce, E. (2021). Austin, TX House Listings. Kaggle.com. https://www.kaggle.com/datasets/ericpierce/austinhousingprices
+Pierce, E. (2021). Austin, TX House Listings. Kaggle.com. [https://www.kaggle.com/datasets/ericpierce/austinhousingprices](https://www.kaggle.com/datasets/ericpierce/austinhousingprices)
 
