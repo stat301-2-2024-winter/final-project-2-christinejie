@@ -77,11 +77,6 @@ rmse_chart <- model_results %>%
   kable_styling()
 
 
-
-
-
-
-
 #table 
 
 bt_best_fe <- bt_tuned_fe |> 
@@ -197,7 +192,6 @@ best_rf <- rf_tuned_fe |>
 library(kableExtra)
 
 ### 
-
 
 
 
