@@ -63,16 +63,18 @@ This is a regression and prediction problem because we are predicting house pric
 
 6) Random Forest (rf)
 
+**Tuning Parameters**
+Tuning a model adjusts its parameters to optimize its performance on a given dataset. This involves experimenting with different parameter values to find the combination that results in the lowest RMSE. I tuned my the parameters of my bt, en, knn, and rf models. 
+
 **Recipe Buiding** I built 4 recipes. 
 
-1) Standard kitchen sink recipe 
+1) Standard kitchen sink recipe: uses all predictor variables. 
 
-2) Standard Feature Engineered recipe 
+2) Standard Feature Engineered recipe: an upgraded standard kitchen sink recipe. 
 
-3) Tree based kitchen sink recipe 
+3) Tree based kitchen sink recipe: uses all predictor variables. 
 
-4) Tree based Feature Engineered recipe 
-
+4) Tree based Feature Engineered recipe: an upgraded tree based kitchen sink recipe. 
 
 ## Model Building and Selection 
 
